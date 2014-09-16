@@ -97,10 +97,15 @@ module.exports = function(grunt) {
                 //Shared Options Hash
             },
             dev : {
-                NODE_ENV : 'development'
+                NODE_ENV : 'development',
+                PORT: 3000
             },
             test : {
                 NODE_ENV : 'test'
+            },
+            prod : {
+                NODE_ENV : 'production',
+                PORT: 8443
             }
         },
 
@@ -191,4 +196,7 @@ module.exports = function(grunt) {
 
     // Build task.
     grunt.registerTask('build', ['bower:install', 'jshint', 'ccu', 'env:dev']);
+
+    //Productions task
+    grunt.registerTask('prod-build', ['jshint', 'env:prod', 'concurrent']);
 };
