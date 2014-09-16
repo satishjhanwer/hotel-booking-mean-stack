@@ -1,13 +1,6 @@
 (function() {
     angular.module('common-factories', [])
     .factory('transformRequestAsFormPost', function(){
-        function transformRequest(data, getHeaders) {
-            var headers = getHeaders();
-            headers["Content-Type"] = "application/x-www-form-urlencoded; charset=utf-8";
-            return (serializeData(data));
-        }
-
-        return (transformRequest);
 
         function serializeData(data) {
             if (!angular.isObject(data)) {
@@ -28,6 +21,14 @@
             var source = buffer.join("&").replace(/%20/g, "+");
             return (source);
         }
+
+        function transformRequest(data, getHeaders) {
+            var headers = getHeaders();
+            headers["Content-Type"] = "application/x-www-form-urlencoded; charset=utf-8";
+            return (serializeData(data));
+        }
+
+        return (transformRequest);
     })
     .factory('myHttpResponseInterceptor',['$q','$location', 'growl',function($q,$location, growl){
         return {

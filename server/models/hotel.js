@@ -1,8 +1,15 @@
+/*jslint node: true */
+"use strict";
+
 // load the things we need
 var mongoose = require('mongoose');
+var Schema   = mongoose.Schema;
 
-// define the schema for our user model
-var hotelSchema = mongoose.Schema({
+/**
+ * define the schema for our hotel model
+ * @type {Schema}
+ */
+var hotelSchema = new Schema({
     name         : String,
     address      : String,
     zip          : String,

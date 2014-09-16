@@ -1,100 +1,204 @@
-var express = require('express');
+/*jslint node: true */
+"use strict";
+
+var express  = require('express');
 var passport = require('passport');
-var router = express.Router();
-var Hotel = require('../models/hotel');
-var Booking = require('../models/booking');
 
-router.post('/logout', function(req, res) {
-   req.logout();
-   res.json({ redirect: '/logout' });
-});
+var router   = express.Router();
 
-router.post('/login', function(req, res, next) {
-  if(!req.body.email || !req.body.password){
-    return res.json({ error: 'Email and Password required' });
-  }
-  passport.authenticate('local-login', function(err, user, info) {
-    if(err){
-      return res.json(err);
+var Hotel    = require('../models/hotel');
+var Booking  = require('../models/booking');
+
+/**
+ * route middleware to make sure a user is logged in
+ *
+ * @param  {[type]}   req
+ * @param  {[type]}   res
+ * @param  {Function} next
+ * @return {Boolean}
+ */
+function isLoggedIn(req, res, next) {
+    if (req.isAuthenticated()){
+        return next();
     }
-    if (user.error) {
-      return res.json({ error: user.error });
-    }
-    req.logIn(user, function(err) {
-      if (err) {
-        return res.json(err);
-      }
-      return res.json({ redirect: '/profile' });
-    });
-  })(req, res);
-});
+    res.redirect('/');
+}
 
+/**
+ * route middleware to ensure user is logged in - ajax get
+ *
+ * @param  {[type]}   req
+ * @param  {[type]}   res
+ * @param  {Function} next
+ * @return {Boolean}
+ */
+function isLoggedInAjax(req, res, next) {
+    if (!req.isAuthenticated()) {
+        return res.json( { redirect: '/login' } );
+    } else {
+        next();
+    }
+}
+
+/**
+ * route to handle user registration request
+ *
+ * @param  {[type]}   req
+ * @param  {[type]}   res
+ * @param  {Function} next
+ * @return {[type]}
+ */
 router.post('/signup', function(req, res, next) {
-  if (!req.body.email || !req.body.password) {
-    return res.json({ error: 'Email and Password required' });
-  }
-  passport.authenticate('local-signup', function(err, user, info) {
-    if (err) {
-      return res.json(err);
+    if (!req.body.email || !req.body.password) {
+        return res.json({ error: 'Email and Password required' });
     }
-    if (user.error) {
-      return res.json({ error: user.error });
-    }
-    req.logIn(user, function(err) {
-      if (err) {
-        return res.json(err);
-      }
-      return res.json({ redirect: '/profile' });
-    });
-  })(req, res);
+    passport.authenticate('local-signup', function(err, user, info) {
+        if (err) {
+            return res.json(err);
+        }
+        if (user.error) {
+            return res.json({ error: user.error });
+        }
+        req.logIn(user, function(err) {
+            if (err) {
+                return res.json(err);
+            }
+            return res.json({ redirect: '/profile' });
+        });
+    })(req, res);
 });
 
+/**
+ * route to handle login request
+ *
+ * @param  {[type]}   req
+ * @param  {[type]}   res
+ * @param  {Function} next
+ * @return {[type]}
+ */
+router.post('/login', function(req, res, next) {
+    if(!req.body.email || !req.body.password){
+        return res.json({ error: 'Email and Password required' });
+    }
+    passport.authenticate('local-login', function(err, user, info) {
+        if(err){
+            return res.json(err);
+        }
+        if (user.error) {
+            return res.json({ error: user.error });
+        }
+        req.logIn(user, function(err) {
+            if (err) {
+                return res.json(err);
+            }
+            return res.json({ redirect: '/profile' });
+        });
+    })(req, res);
+});
+
+/**
+ * route to handle logout request.
+ *
+ * @param  {[type]} req
+ * @param  {[type]} res
+ * @return {[type]}
+ */
+router.post('/logout', function(req, res) {
+    req.logout();
+    res.json({ redirect: '/logout' });
+});
+
+/**
+ * route to load user date on user home page.
+ * Only if user is logged in.
+ *
+ * @param  {[type]} req
+ * @param  {[type]} res
+ * @return {[type]}
+ */
 router.get('/api/userData', isLoggedInAjax, function(req, res) {
-  console.log(req.user);
-  return res.json(req.user);
+    return res.json(req.user);
 });
 
+/**
+ * route to list down all hotels and load a specific hotel detail if id is provided.
+ * Only if user is logged in.
+ *
+ * @param  {[type]} req
+ * @param  {[type]} res
+ * @return {[type]}
+ */
 router.get('/api/hotels/:id?', isLoggedInAjax, function(req, res){
     if(req.params.id){
         Hotel.findOne({ _id: req.params.id }, function(err, hotel) {
-            // if there is an error retrieving, send the error. nothing after res.send(err) will execute
-            if (err)
-              res.send(err);
+            if (err) {
+                return res.json(err);
+            }
             if(hotel){
-              res.json(hotel); // return hotel in JSON format
+                return res.json(hotel); // return hotel in JSON format
             }
             else{
-              res.send(err);
+                return res.json(err);
             }
         });
     }else{
         Hotel.find(function(err, hotels) {
-          // if there is an error retrieving, send the error. nothing after res.send(err) will execute
-          if (err)
-            res.send(err);
-
-          res.json(hotels); // return all hotels in JSON format
+            if (err) {
+                return res.json(err);
+            }
+            return res.json(hotels); // return all hotels in JSON format
         });
     }
 });
 
-
-router.get('/api/bookings', isLoggedInAjax, function(req, res){
-    Booking.find({user: req.user}, function(err, bookings) {
-      // if there is an error retrieving, send the error. nothing after res.send(err) will execute
-      if (err)
-        res.send(err);
-
-      res.json(bookings); // return all hotels in JSON format
+/**
+ * route to load hotels based on searched term.
+ * Only if user is logged in.
+ *
+ * @param  {[type]} req [description]
+ * @param  {[type]} res [description]
+ * @return {[type]}     [description]
+ */
+router.post('/api/hotels/search', isLoggedInAjax, function(req, res){
+    var regex = new RegExp(req.body.term, 'i');  // 'i' makes it case insensitive
+    Hotel.find({name: regex}, function(err, hotels) {
+        if (err) {
+            return res.json(err);
+        }
+        return res.json(hotels); // return all hotels in JSON format
     });
 });
 
-router.post('/api/bookings', isLoggedInAjax, function(req, res){
-    console.log(req.body);
-    Hotel.findOne({ _id: req.body.hotel._id }, function(err, hotel){
-        if(err)
-            res.sned(err);
+/**
+ * route to list down all the bookings done my user.
+ * Only if user is logged in.
+ *
+ * @param  {[type]} req
+ * @param  {[type]} res
+ * @return {[type]}
+ */
+router.get('/api/bookings', isLoggedInAjax, function(req, res){
+    Booking.find({user: req.user}, function(err, bookings) {
+        if (err) {
+            return res.json(err);
+        }
+        return res.json(bookings); // return all bookings in JSON format
+    });
+});
 
+/**
+ * route to create a new booking based on user data.
+ * Only if user is logged in.
+ *
+ * @param  {[type]} req
+ * @param  {[type]} res
+ * @return {[type]}
+ */
+router.post('/api/bookings', isLoggedInAjax, function(req, res){
+    Hotel.findOne({ _id: req.body.hotel._id }, function(err, hotel){
+        if(err){
+            return res.json(err);
+        }
         if(hotel){
             var booking = new Booking();
             booking.creditCardName = req.body.creditCardName;
@@ -107,64 +211,50 @@ router.post('/api/bookings', isLoggedInAjax, function(req, res){
             booking.checkOutDate = new Date(req.body.checkOutDate);
             booking.hotel = hotel;
             booking.user = req.user;
-
             booking.save(function(err){
-                if (err)
+                if (err) {
                     throw err;
+                }
                 return res.json( { redirect: '/profile' } );
             });
         }else{
-          res.send(err);
+            return res.json(err);
         }
     });
 });
 
+/**
+ * route to cancel booking based on booking id.
+ * Only if user is logged in.
+ *
+ * @param  {[type]} req
+ * @param  {[type]} res
+ * @return {[type]}
+ */
 router.delete('/api/bookings/:id', isLoggedInAjax, function(req, res){
     Booking.findOne({ _id: req.params.id, user: req.user._id}).exec(function(err, booking){
-        if(err)
-            res.send(err);
+        if(err){
+            return res.json(err);
+        }
 
-        if(booking != null){
+        if(booking){
             booking.remove();
             return res.json( { redirect: '/profile' } );
         }else{
-          res.send(err);
+            return res.json(err);
         }
     });
 });
 
-router.post('/api/hotels/search', isLoggedInAjax, function(req, res){
-    console.log(req.body.term);
-    var regex = new RegExp(req.body.term, 'i');  // 'i' makes it case insensitive
-    Hotel.find({name: regex}, function(err, hotels) {
-      // if there is an error retrieving, send the error. nothing after res.send(err) will execute
-      if (err)
-        res.send(err);
-
-      res.json(hotels); // return all hotels in JSON format
-    });
-});
-
+/**
+ * general route to load templates.
+ *
+ * @param  {[type]} req
+ * @param  {[type]} res
+ * @return {[type]}
+ */
 router.get('*', function(req, res) {
-  res.render('index', { title: 'Express', user: req.user ? req.user : null });
+  res.render('index', { title: 'Hotel Booking System', user: req.user ? req.user : null });
 });
-
-// route middleware to make sure a user is logged in
-function isLoggedIn(req, res, next) {
-  // if user is authenticated in the session, carry on
-  if (req.isAuthenticated())
-    return next();
-  // if they aren't redirect them to the home page
-  res.redirect('/');
-}
-
-// route middleware to ensure user is logged in - ajax get
-function isLoggedInAjax(req, res, next) {
-  if (!req.isAuthenticated()) {
-    return res.json( { redirect: '/login' } );
-  } else {
-    next();
-  }
-}
 
 module.exports = router;

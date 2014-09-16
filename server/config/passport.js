@@ -1,64 +1,86 @@
-// config/passport.js
+/*jslint node: true */
+"use strict";
 
+var User            = require('../models/user');
 var LocalStrategy   = require('passport-local').Strategy;
 
-// load up the user model
-var User          = require('../models/user');
-
-// expose this function to our app using module.exports
+/**
+ * expose this function to our app using module.exports
+ * @param  {[type]} passport
+ * @return {[type]}
+ */
 module.exports = function(passport) {
 
-    // required for persistent login sessions
-    // passport needs ability to serialize and unserialize users out of session
-
-    // used to serialize the user for the session
+    /**
+     * required for persistent login sessions
+     * passport needs ability to serialize and unserialize users out of session
+     * used to serialize the user for the session
+     *
+     * @param  {[type]}   user
+     * @param  {Function} done
+     * @return {[type]}
+     */
     passport.serializeUser(function(user, done) {
         done(null, user.id);
     });
 
-    // used to deserialize the user
+    /**
+     * used to deserialize the user
+     *
+     * @param  {[type]}   id
+     * @param  {Function} done
+     * @return {[type]}
+     */
     passport.deserializeUser(function(id, done) {
         User.findById(id, function(err, user) {
             done(err, user);
         });
     });
 
-    // we are using named strategies since we have one for login and one for signup
-    // by default, if there was no name, it would just be called 'local'
+    /**
+     * we are using named strategies since we have one for login and one for signup
+     * by default, if there was no name, it would just be called 'local'
+     *
+     * @param  {[type]} req
+     * @param  {[type]} email
+     * @param  {[type]} password
+
+     * @return {[type]}
+     */
     passport.use('local-signup', new LocalStrategy({
-        // by default, local strategy uses username and password, we will override with email
         usernameField : 'email',
         passwordField : 'password',
-        passReqToCallback : true // allows us to pass back the entire request to the callback
+        passReqToCallback : true
     },
     function(req, email, password, done) {
-        if (email)
-            email = email.toLowerCase(); // Use lower-case e-mails to avoid case-sensitive e-mail matching
+        if (email) {
+            email = email.toLowerCase(); // avoid case-sensitive e-mail matching
+        }
 
-        // asynchronous
-        // User.findOne wont fire unless data is sent back
+        /**
+         * asynchronous
+         * User.findOne wont fire unless data is sent back
+         *
+         * @return {[type]}
+         */
         process.nextTick(function() {
             User.findOne({ 'email' :  email }, function(err, user) {
-                // if there are any errors, return the error
-                if (err)
+                if (err) {
                     return done(err);
-
-                console.log(user);
-                // check to see if theres already a user with that email
+                }
                 if (user) {
                     return done(null, { error: 'That email is already taken.' });
                 } else {
-                    // create the user
-                    var newUser             = new User();
+                    var newUser       = new User();
                     newUser.email     = email;
                     newUser.firstName = req.body.firstName;
                     newUser.lastName  = req.body.lastName;
                     newUser.password  = newUser.generateHash(password);
 
                     newUser.save(function(err) {
-                        if (err)
+                        if (err){
                             throw err;
-
+                        }
                         return done(null, newUser);
                     });
                 }
@@ -66,36 +88,45 @@ module.exports = function(passport) {
         });
     }));
 
-    // we are using named strategies since we have one for login and one for signup
-    // by default, if there was no name, it would just be called 'local'
+    /**
+     * we are using named strategies since we have one for login and one for signup
+     * by default, if there was no name, it would just be called 'local'
+     *
+     * @param  {[type]} req
+     * @param  {[type]} email
+     * @param  {[type]} password
+     * @return {[type]}
+     */
     passport.use('local-login', new LocalStrategy({
-        // by default, local strategy uses username and password, we will override with email
         usernameField : 'email',
         passwordField : 'password',
-        passReqToCallback : true // allows us to pass back the entire request to the callback
+        passReqToCallback : true
     },
-    function(req, email, password, done) { // callback with email and password from our form
+    function(req, email, password, done) {
+        if(email) {
+            email = email.toLowerCase();
+        }
 
-        if(email)
-            email = email.toLowerCase(); // Use lower-case e-mails to avoid case-sensitive e-mail matching
-
-        // asynchronous
+        /**
+         * asynchronous
+         * User.findOne wont fire unless data is sent back
+         *
+         * @return {[type]}
+         */
         process.nextTick(function() {
             User.findOne({ 'email' :  email }, function(err, user) {
-                // if there are any errors, return the error
-                if (err)
+                if (err) {
                     return done(err);
-
-                // if no user is found, return the message
-                if (!user)
+                }
+                if (!user) {
                     return done(null, { error: 'No user found. ' });
-
-                if (!user.validPassword(password))
+                }
+                if (!user.validPassword(password)) {
                     return done(null, { error: 'Oops! Wrong password.' });
-
-                // all is well, return user
-                else
+                }
+                else {
                     return done(null, user);
+                }
             });
         });
     }));
