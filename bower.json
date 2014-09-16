@@ -20,7 +20,7 @@
         "**/.*",
         "node_modules",
         "bower_components",
-        "public/lib",
+        "src/lib",
         "test",
         "tests"
     ],

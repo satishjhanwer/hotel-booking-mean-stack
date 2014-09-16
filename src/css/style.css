@@ -1,0 +1,215 @@
+body {
+    font-family: 'Open Sans', sans-serif;
+    line-height:28px;
+}
+
+.set-radius-zero {
+    border-radius:0px;
+    -moz-border-radius:0px;
+    -webkit-border-radius:0px;
+}
+.content-wrapper {
+    margin-top: 40px;
+    min-height:600px;
+    padding-bottom:90px;
+}
+.header-line {
+    font-weight:900;
+    padding-bottom:25px;
+    border-bottom:1px solid #eeeeee;
+    text-transform:uppercase;
+}
+.pad-botm {
+    padding-bottom:30px;
+}
+
+.text-normal {
+    font-weight: normal;
+    text-align: left !important;
+}
+
+.required-asterisk .control-label:after {
+    color: #FF0000;
+    position: absolute;
+    margin-left: 0px;
+    font-family: 'FontAwesome';
+    font-weight: normal;
+    font-size: 6px;
+    content: "\f005";
+}
+
+.fa-cc-amex {
+    color: #007bc1 !important;
+}
+
+.fa-cc-discover {
+    color: #f68121 !important;
+}
+
+.fa-cc-mastercard {
+    color: #0a3a82 !important;
+}
+
+.fa-cc-paypal {
+    color: #253b80 !important;
+}
+
+.fa-cc-visa {
+    color: #0157a2 !important;
+}
+
+/* =========================================================
+   NAVBAR & MENU STYLES
+============================================================ */
+
+.right-div {
+    float: right;
+    padding: 20px;
+}
+
+#menu-top a {
+    color:#000;
+    text-decoration:none;
+    font-weight:500;
+    padding: 25px 15px 25px 15px;
+    text-transform:uppercase;
+
+}
+
+.menu-section {
+    background-color: #f7f7f7;
+    border-bottom:5px solid #9170E4;
+    width:100%
+}
+
+.menu-top-active {
+    background-color:#eeeeee;
+}
+
+.navbar-inverse {
+    background-color: #FFF;
+    border-color: rgba(155, 153, 153, 0.23);
+
+}
+
+.navbar {
+    min-height: 110px;
+    margin-bottom: 0px;
+
+}
+
+.navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form {
+    border-color:transparent;
+}
+.navbar-toggle {
+    background-color: black;
+    border: 1px solid black;
+}
+
+/* =============================================================
+   DASHBOARD STYLES
+============================================================ */
+
+.form-signin {
+    max-width: 330px;
+    padding: 15px;
+    margin: 0 auto;
+}
+
+.form-signin .form-signin-heading, .form-signin .checkbox {
+    margin-bottom: 10px;
+}
+
+.form-signin .checkbox {
+    font-weight: normal;
+}
+
+.form-signin .form-control {
+    position: relative;
+    font-size: 16px;
+    height: auto;
+    padding: 10px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.form-signin .form-control:focus {
+    z-index: 2;
+}
+
+.form-signin input[type="text"], input[type="password"] {
+    margin-bottom: 10px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.account-wall {
+    margin-top: 20px;
+    padding: 40px 0px 20px 0px;
+    background-color: #f7f7f7;
+    -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+}
+
+.profile-img {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 10px;
+    display: block;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+}
+
+.need-help {
+    margin-top: 10px;
+}
+
+.new-account {
+    display: block;
+    margin-top: 10px;
+}
+
+.login-title {
+    color: #555;
+    font-size: 18px;
+    font-weight: 400;
+    display: block;
+}
+
+.img-comments {
+    border: 3px double #e1e1e1;
+    height: 60px;
+ }
+
+.slide-bdr {
+    border:5px solid #9170E4
+}
+
+.recent-users-sec img {
+    max-height:80px;
+    margin:15px;
+}
+
+.back-widget-set {
+    background-color:transparent;
+}
+
+/* =============================================================
+   FOOTER SECTION STYLES
+============================================================ */
+
+.footer-section {
+    padding:25px 50px 25px 50px;
+    color:#000;
+    font-size:13px;
+    background-color: #f7f7f7;
+    text-align:right;
+    border-top:5px solid #9170E4;
+}
+
+.footer-section a, .footer-section a:hover {
+    color:#000;
+}
