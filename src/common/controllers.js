@@ -1,0 +1,162 @@
+(function() {
+    angular.module('common-controllers', []).config(['$routeProvider', '$locationProvider',
+        function($routeProvider, $locationProvider) {
+            $routeProvider.when('/profile', {
+                templateUrl: '/templates/profile.html',
+                controller: 'ProfileController',
+                controllerAs: 'profile'
+            }).when('/signup', {
+                templateUrl: '/templates/signup.html',
+                controller: 'SignupController',
+                controllerAs: 'signup',
+                caseInsensitiveMatch: true
+            }).when('/login', {
+                templateUrl: '/templates/login.html',
+                controller: 'LoginController',
+                controllerAs: 'login',
+                caseInsensitiveMatch: true
+            }).when('/view-hotel/:id', {
+                templateUrl: '/templates/hotel.html',
+                controller: 'HotelController',
+                controllerAs: 'hotel',
+            }).otherwise({
+                templateUrl: '/templates/landing.html',
+                controller: 'IndexController',
+                controllerAs: 'index'
+            });
+            $locationProvider.html5Mode(true);
+        }
+    ])
+    .controller('IndexController', ['$scope', '$window', 'SessionService', function($scope, $window,sessionService) {
+        $scope.session = sessionService;
+        if($window.user != null){
+            sessionService.authSuccess($window.user);
+        }
+        $scope.logout = function(){
+            sessionService.logout();
+        };
+    }])
+    .controller('LoginController', ['$scope', 'SessionService', function($scope, sessionService) {
+        $scope.login = function() {
+            sessionService.login(this.email,this.password);
+        };
+    }])
+    .controller('SignupController', ['$scope', 'UserService', function($scope, userService) {
+        $scope.signup = function(){
+            var user = { email: this.email, password: this.password, firstName: this.firstName,
+                lastName: this.lastName};
+            userService.create(user).success(function(data) {
+                console.log(data);
+            });
+        };
+    }])
+    .controller('ProfileController', ['$scope', 'HotelService', 'UserService', 'SessionService', 'BookingService', function($scope, hotelService, userService, sessionService, bookingService) {
+
+        $scope.hotels = {};
+        $scope.bookings = {};
+        $scope.term = hotelService.term;
+
+        $scope.getById = function(arr, id){
+            for (var d = 0, len = arr.length; d < len; d += 1) {
+                if (arr[d]._id === id) {
+                    return arr[d];
+                }
+            }
+        };
+
+        $scope.init = function() {
+            userService.get().success(function(data) {
+                $scope.user = data;
+                sessionService.authSuccess(data);
+            });
+
+            bookingService.get().success(function(data) {
+                var bkings = data;
+                hotelService.get().success(function(dataHotels){
+                    for(var i = 0; i < bkings.length; i += 1){
+                        var bking = bkings[i];
+                        bkings[i].hotel = $scope.getById(dataHotels,bking.hotel);
+                    }
+                    $scope.bookings = bkings;
+                });
+            });
+        };
+
+
+        $scope.searchHotels = function(){
+            hotelService.search(this.term).success(function(data) {
+                $scope.hotels = data;
+                hotelService.term = $scope.term;
+            });
+        };
+
+        $scope.cancelBooking = function(id) {
+            bookingService.delete(id).success(function(data){
+              $scope.init();
+          });
+        };
+    }])
+    .controller('HotelController', ['$scope', '$locale', '$location', 'HotelService', 'BookingService', function($scope, $locale, $location, hotelService, bookingService) {
+
+        $scope.booking = { type : undefined };
+        $scope.currentYear = new Date().getFullYear();
+        $scope.currentMonth = new Date().getMonth() + 1;
+        $scope.months = $locale.DATETIME_FORMATS.MONTH;
+
+        $scope.options = [{
+                name : 'Single Bed',
+                type : 'basic'
+            }, {
+                name : 'Double Bed',
+                type : 'basic'
+            }, {
+                name : 'Double Bed',
+                type : 'deluxe'
+            }, {
+                name : 'King Size Bed',
+                type : 'Maharaja'
+            }, {
+                name : 'Suite',
+                type : 'Lake View'
+            }
+        ];
+
+        $scope.$on('$routeChangeSuccess', function (event, current, previous) {
+            $scope.init(current.pathParams.id);
+            event.preventDefault();
+        });
+
+        $scope.init = function(hoteId) {
+            hotelService.getHotel(hoteId).success(function(data){
+                $scope.hotel = data;
+            });
+        };
+
+        $scope.bookHotel = function() {
+            var newBooking = {
+                month: $scope.booking.month,
+                year : $scope.booking.year,
+                roomType : $scope.booking.roomType.type,
+                creditCard : $scope.booking.creditCard,
+                securityCode : $scope.booking.securityCode,
+                checkOutDate : $scope.booking.checkOutDate,
+                checkInDate : $scope.booking.checkInDate,
+                creditCardName : $scope.booking.creditCardName,
+                hotel: $scope.hotel
+            };
+            bookingService.create(newBooking).success(function(data){
+                console.log(data);
+            });
+        };
+
+        $scope.backToSearch = function() {
+            $location.path('/profile');
+        };
+
+        $scope.proceed = function() {
+            if ($scope.paymentForm.$valid) {
+                $scope.confirmBooking = true;
+            }
+        };
+    }]);
+})();
