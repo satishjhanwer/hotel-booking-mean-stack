@@ -1,0 +1,35 @@
+{
+    "name": "hotel-booking-mean-stack",
+    "version": "1.0.0",
+    "homepage": "https://github.com/satishjhanwer/hotel-booking-mean-stack",
+    "description": "Using MEAN stack to implement a simple hotel booking application where user can search hotels in database and book them.",
+    "moduleType": [
+        "node"
+    ],
+    "keywords": [
+        "node",
+        "express",
+        "angular",
+        "mongodb"
+    ],
+    "authors": [
+        "Satish Jhanwer"
+    ],
+    "license": "MIT",
+    "ignore": [
+        "**/.*",
+        "node_modules",
+        "bower_components",
+        "public/lib",
+        "test",
+        "tests"
+    ],
+    "dependencies": {
+        "angular-resource": "~1.2.24",
+        "angular-cookies": "~1.2.24",
+        "angular-route": "~1.2.24",
+        "bootstrap": "~3.2.0",
+        "bootstrap3-datetimepicker": "~3.1.3",
+        "fontawesome": "~4.2.0"
+    }
+}
