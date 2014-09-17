@@ -31,7 +31,7 @@
                     <a href="/login" ng-hide="session.isLoggedIn && session.currentUser" class="btn btn-info pull-right">Login</a>
                     <a href="/signup" ng-hide="session.isLoggedIn && session.currentUser" class="btn btn-info">Signup</a>&nbsp;
                     <span ng-show="session.isLoggedIn && session.currentUser" ng-bind="'Welcome ' + session.currentUser.firstName"></span>&nbsp;&nbsp;
-                    <a href="#" ng-show="session.isLoggedIn && session.currentUser" class="btn btn-info pull-right" ng-click="logout()">Logout</a>
+                    <a href="javascript:" ng-show="session.isLoggedIn && session.currentUser" class="btn btn-info pull-right" ng-click="logout()">Logout</a>
                 </div>
             </div>
         </div>

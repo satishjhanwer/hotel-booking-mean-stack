@@ -1,20 +1,19 @@
 (function() {
     angular.module('common-services', [])
-    .factory('SessionService', ['$rootScope', '$http', function($rootScope, $http){
+    .factory('SessionService', ['$rootScope', '$http', '$location', '$q', function($rootScope, $http, $location, $q){
         var session = {
             init: function() {
                 this.resetSession();
             },
             resetSession: function() {
                 this.currentUser = null;
+                this.isAdmin = false;
                 this.isLoggedIn = false;
             },
             login: function(email, password) {
-                $http.post('/login', {
+                return $http.post('/login', {
                     email: email,
                     password: password
-                }).success(function(data) {
-                    console.log(data);
                 });
             },
             logout: function() {
@@ -23,8 +22,22 @@
                     scope.resetSession();
                 });
             },
+            isAdminLoggedIn: function() {
+                $http.get('/api/userData/').success(function(data){
+                    var validateAccess = $q.defer();
+                    var isAllowed = data.isAdmin;
+
+                    if(!isAllowed){
+                        $location.path('/profile');
+                    }
+
+                    validateAccess.resolve();
+                    return validateAccess.promise;
+                });
+            },
             authSuccess: function(userData) {
                 this.currentUser = userData;
+                this.isAdmin = userData.isAdmin;
                 this.isLoggedIn = true;
             },
             authFailed: function() {
@@ -71,7 +84,7 @@
     .factory('UserService', ['$rootScope', '$http', function($rootScope, $http){
         return {
             get: function() {
-                return $http.get('/api/userData/');
+                return $http.get('/api/admin/users/');
             },
             create: function(userData) {
                 return $http.post('/signup', userData);

@@ -18,7 +18,24 @@
             }).when('/view-hotel/:id', {
                 templateUrl: '/templates/hotel.html',
                 controller: 'HotelController',
-                controllerAs: 'hotel',
+                controllerAs: 'hotel'
+            }).when('/admin', {
+                templateUrl: '/templates/admin.html',
+                controller: 'AdminController',
+                controllerAs: 'admin',
+                resolve: {
+                    validate: function($q, $location, SessionService) {
+                        var validateAccess = $q.defer();
+                        var isAllowed = SessionService.isAdmin;
+
+                        if(!isAllowed){
+                            $location.path('/profile');
+                        }
+
+                        validateAccess.resolve();
+                        return validateAccess.promise;
+                    }
+                }
             }).otherwise({
                 templateUrl: '/templates/landing.html',
                 controller: 'IndexController',
@@ -36,9 +53,22 @@
             sessionService.logout();
         };
     }])
-    .controller('LoginController', ['$scope', 'SessionService', function($scope, sessionService) {
+    .controller('LoginController', ['$scope', '$location', 'SessionService','growl', function($scope, $location, sessionService, growl) {
         $scope.login = function() {
-            sessionService.login(this.email,this.password);
+            sessionService.login(this.email,this.password).success(function(data){
+                console.log(data);
+                if(!data.error){
+                    sessionService.authSuccess(data);
+                    if(data.isAdmin){
+                        $location.path('/admin');
+                    }else{
+                        $location.path('/profile');
+                    }
+                }
+                else{
+                    growl.addErrorMessage(data.error);
+                }
+            });
         };
     }])
     .controller('SignupController', ['$scope', 'UserService', function($scope, userService) {
@@ -47,6 +77,21 @@
                 lastName: this.lastName};
             userService.create(user).success(function(data) {
                 console.log(data);
+            });
+        };
+    }])
+    .controller('AdminController', ['$scope', 'HotelService', 'UserService', function($scope, hotelService, userService) {
+        $scope.hotels = {};
+        $scope.users = {};
+
+        $scope.init = function() {
+            userService.get().success(function(data) {
+                console.log(data);
+                $scope.users = data;
+            });
+            hotelService.get().success(function(data) {
+                console.log(data);
+                $scope.hotels = data;
             });
         };
     }])
@@ -65,28 +110,26 @@
         };
 
         $scope.init = function() {
-            userService.get().success(function(data) {
-                $scope.user = data;
-                sessionService.authSuccess(data);
-            });
-
             bookingService.get().success(function(data) {
                 var bkings = data;
-                hotelService.get().success(function(dataHotels){
-                    for(var i = 0; i < bkings.length; i += 1){
-                        var bking = bkings[i];
-                        bkings[i].hotel = $scope.getById(dataHotels,bking.hotel);
-                    }
-                    $scope.bookings = bkings;
-                });
+                if(bkings){
+                    hotelService.get().success(function(dataHotels){
+                        for(var i = 0; i < bkings.length; i += 1){
+                            var bking = bkings[i];
+                            bkings[i].hotel = $scope.getById(dataHotels,bking.hotel);
+                        }
+                        $scope.bookings = bkings;
+                    });
+                }
             });
         };
 
-
         $scope.searchHotels = function(){
             hotelService.search(this.term).success(function(data) {
-                $scope.hotels = data;
-                hotelService.term = $scope.term;
+                if(data.length > 0){
+                    $scope.hotels = data;
+                    hotelService.term = $scope.term;
+                }
             });
         };
 

@@ -1,19 +1,10 @@
-<div class="row" ng-controller="ProfileController" ng-init="init()">
+<div class="row" ng-controller="AdminController" ng-init="init()">
     <div class="col-md-12">
         <div class="row">
             <div class="col-md-12">
-                <div class="row" style="padding-bottom: 10px;">
-                    <div style="padding: 0 8px;" growl></div>
-                    <div class="col-md-3">
-                        <input type="text" ng-model="term" class="input-sm col-md-12" placeholder="Search Hotel">
-                    </div>
-                    <div class="col-md-1">
-                        <button class="btn btn-primary btn-block" ng-click="searchHotels()" type="button">Search</button>
-                    </div>
-                </div>
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        Search Hotels
+                        Current Hotels
                     </div>
                     <div class="panel-body">
                         <div class="table-responsive">
@@ -33,7 +24,7 @@
                                         <td>{{hotel.address}}</td>
                                         <td>{{hotel.city}} - {{hotel.state}}</td>
                                         <td>{{hotel.zip}}</td>
-                                        <td><a href="#/view-hotel/{{hotel._id}}" >View Hotel</a></td>
+                                        <td><a href="">Delete Hotel</a></td>
                                     <tr>
                                 </tbody>
                             </table>
@@ -47,7 +38,7 @@
             <div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        Current Booked Hotels
+                        Current Users
                     </div>
                     <div class="panel-body">
                         <div class="table-responsive">
@@ -55,23 +46,17 @@
                                 <thead>
                                     <tr>
                                         <th>Name</th>
-                                        <th>Address</th>
-                                        <th>City, State</th>
-                                        <th>Check In Date</th>
-                                        <th>Check Out Date</th>
-                                        <th>Confirmation Number</th>
+                                        <th>Email Address</th>
+                                        <th>Is Admin</th>
                                         <th>action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr ng-repeat="booking in bookings">
-                                        <td>{{booking.hotel.name}}</td>
-                                        <td>{{booking.hotel.address}}</td>
-                                        <td>{{booking.hotel.city}} - {{booking.hotel.state}}</td>
-                                        <td>{{booking.checkInDate}}</td>
-                                        <td>{{booking.checkOutDate}}</td>
-                                        <td>{{booking._id}}</td>
-                                        <td><a href="#" ng-click="cancelBooking(booking._id)">cancel Booking </a></td>
+                                    <tr ng-repeat="user in users">
+                                        <td>{{user.firstName}} {{user.lastName}}</td>
+                                        <td>{{user.email}}</td>
+                                        <td>{{user.isAdmin}}</td>
+                                        <td><a href="">Delete User</a></td>
                                     <tr>
                                 </tbody>
                             </table>

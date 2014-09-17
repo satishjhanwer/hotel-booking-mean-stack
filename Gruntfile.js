@@ -82,9 +82,12 @@ module.exports = function(grunt) {
                 dest: './public/js/<%= pkg.name %>.js',
             },
             css: {
+                options: {
+                    separator: ''
+                },
                 src: [
                     './src/lib/bootstrap/dist/css/bootstrap.css',
-                    './src/lib/bootstrap3-datetimepicker/build/css/bootstrap-datetimepicker.min.css',
+                    './src/lib/bootstrap3-datetimepicker/build/css/bootstrap-datetimepicker.css',
                     './src/lib/fontawesome/css/font-awesome.css',
                     './src/css/style.css'
                 ],
@@ -192,7 +195,7 @@ module.exports = function(grunt) {
     grunt.registerTask('default', ['build', 'concurrent']);
 
     // clean, concat and uglify
-    grunt.registerTask('ccu', ['clean', 'concat', 'bower_concat', 'cssmin', 'imagemin', 'uglify']);
+    grunt.registerTask('ccu', ['clean', 'copy', 'concat', 'bower_concat', 'cssmin', 'imagemin', 'uglify']);
 
     // Build task.
     grunt.registerTask('build', ['bower:install', 'jshint', 'ccu', 'env:dev']);

@@ -14,7 +14,8 @@ var userSchema = new Schema({
     email        : {required: true, unique: true, type: String },
     password     : {required: true, type: String },
     firstName    : {required: true, type: String },
-    lastName     : {required: true, type: String }
+    lastName     : {required: true, type: String },
+    isAdmin      : {default: false, type: Boolean}
 });
 
 /**
@@ -29,6 +30,7 @@ userSchema.methods.generateHash = function(password) {
 
 /**
  * checking if password is valid
+ *
  * @param  {[type]} password
  * @return {[type]}
  */

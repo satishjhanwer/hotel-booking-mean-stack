@@ -6,6 +6,7 @@ var passport = require('passport');
 
 var router   = express.Router();
 
+var User     = require('../models/user');
 var Hotel    = require('../models/hotel');
 var Booking  = require('../models/booking');
 
@@ -19,6 +20,21 @@ var Booking  = require('../models/booking');
  */
 function isLoggedIn(req, res, next) {
     if (req.isAuthenticated()){
+        return next();
+    }
+    res.redirect('/');
+}
+
+/**
+ * route middleware to make sure a admin user is logged in
+ *
+ * @param  {[type]}   req
+ * @param  {[type]}   res
+ * @param  {Function} next
+ * @return {Boolean}
+ */
+function isAdminLoggedIn(req, res, next) {
+    if(req.isAuthenticated() && req.user.isAdmin === true){
         return next();
     }
     res.redirect('/');
@@ -63,7 +79,7 @@ router.post('/signup', function(req, res, next) {
             if (err) {
                 return res.json(err);
             }
-            return res.json({ redirect: '/profile' });
+            return res.json({redirect: '/profile'});
         });
     })(req, res);
 });
@@ -91,7 +107,7 @@ router.post('/login', function(req, res, next) {
             if (err) {
                 return res.json(err);
             }
-            return res.json({ redirect: '/profile' });
+            return res.json(user);
         });
     })(req, res);
 });
@@ -116,8 +132,13 @@ router.post('/logout', function(req, res) {
  * @param  {[type]} res
  * @return {[type]}
  */
-router.get('/api/userData', isLoggedInAjax, function(req, res) {
-    return res.json(req.user);
+router.get('/api/admin/users/', isLoggedInAjax, function(req, res) {
+    User.find().where('_id').ne(req.user._id).sort('firstName').exec(function(err, users){
+        if (err) {
+            return res.json(err);
+        }
+        return res.json(users); // return all users in JSON format
+    });
 });
 
 /**
@@ -155,17 +176,37 @@ router.get('/api/hotels/:id?', isLoggedInAjax, function(req, res){
  * route to load hotels based on searched term.
  * Only if user is logged in.
  *
- * @param  {[type]} req [description]
- * @param  {[type]} res [description]
- * @return {[type]}     [description]
+ * @param  {[type]} req
+ * @param  {[type]} res
+ * @return {[type]}
  */
 router.post('/api/hotels/search', isLoggedInAjax, function(req, res){
     var regex = new RegExp(req.body.term, 'i');  // 'i' makes it case insensitive
-    Hotel.find({name: regex}, function(err, hotels) {
+    Hotel.find({name: regex}).where('roomCount').gt(0).sort('name').exec(function(err, hotels){
         if (err) {
             return res.json(err);
         }
-        return res.json(hotels); // return all hotels in JSON format
+        if(!hotels.length){
+            return res.json({ error: 'No hotel found for the given search input. ' });
+        }
+        Booking.find({user: req.user}).populate('hotel').exec(function(err, bookings) {
+            if (err) {
+                return res.json(err);
+            }
+            if(!bookings.length){
+                return res.json(hotels); // return all hotels in JSON format
+            }
+            var resultHotels = [];
+            for (var i = hotels.length-1; i >= 0; i--) {
+                if (bookings.indexOf(hotels[i]) != -1) {
+                    resultHotels.push(hotels);
+                }
+            }
+            if(!resultHotels.length){
+                return res.json({ error: 'No hotel found for the given search input. ' });
+            }
+            return res.json(resultHotels); // return all hotels in JSON format
+        });
     });
 });
 
@@ -200,22 +241,27 @@ router.post('/api/bookings', isLoggedInAjax, function(req, res){
             return res.json(err);
         }
         if(hotel){
-            var booking = new Booking();
-            booking.creditCardName = req.body.creditCardName;
-            booking.creditCard = req.body.creditCard;
-            booking.securityCode = req.body.securityCode;
-            booking.month = req.body.month;
-            booking.year = req.body.year;
-            booking.roomType = req.body.roomType;
-            booking.checkInDate = new Date(req.body.checkInDate);
-            booking.checkOutDate = new Date(req.body.checkOutDate);
-            booking.hotel = hotel;
-            booking.user = req.user;
-            booking.save(function(err){
-                if (err) {
+            hotel.bookHotel(function(err, hotel){
+                if(err){
                     throw err;
                 }
-                return res.json( { redirect: '/profile' } );
+                var booking = new Booking();
+                booking.creditCardName = req.body.creditCardName;
+                booking.creditCard = req.body.creditCard;
+                booking.securityCode = req.body.securityCode;
+                booking.month = req.body.month;
+                booking.year = req.body.year;
+                booking.roomType = req.body.roomType;
+                booking.checkInDate = new Date(req.body.checkInDate);
+                booking.checkOutDate = new Date(req.body.checkOutDate);
+                booking.hotel = hotel;
+                booking.user = req.user;
+                booking.save(function(err){
+                    if (err) {
+                        throw err;
+                    }
+                    return res.json( { redirect: '/profile' } );
+                });
             });
         }else{
             return res.json(err);
@@ -238,8 +284,18 @@ router.delete('/api/bookings/:id', isLoggedInAjax, function(req, res){
         }
 
         if(booking){
-            booking.remove();
-            return res.json( { redirect: '/profile' } );
+            Hotel.findOne({ _id: booking.hotel }, function(err, hotel){
+                if(err){
+                    return res.json(err);
+                }
+                hotel.cancelHotel(function(err, hotel){
+                    if(err){
+                        throw err;
+                    }
+                    booking.remove();
+                    return res.json( { redirect: '/profile' } );
+                });
+            });
         }else{
             return res.json(err);
         }
@@ -254,7 +310,7 @@ router.delete('/api/bookings/:id', isLoggedInAjax, function(req, res){
  * @return {[type]}
  */
 router.get('*', function(req, res) {
-  res.render('index', { title: 'Hotel Booking System', user: req.user ? req.user : null });
+    res.render('index', { title: 'Hotel Booking System', user: req.user ? req.user : null });
 });
 
 module.exports = router;
