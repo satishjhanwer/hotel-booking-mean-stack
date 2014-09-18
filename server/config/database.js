@@ -1,5 +1,6 @@
 // config/database.js
 
 module.exports = {
-    'url' : 'localhost:27017/hoteldb'
+    'url' : 'mongodb://root:root@ds035740.mongolab.com:35740/hoteldb'
+    //'url' : 'localhost:27017/hoteldb'
 };
