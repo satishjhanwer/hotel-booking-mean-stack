@@ -126,7 +126,7 @@ router.post('/logout', function(req, res) {
 
 /**
  * route to load user date on user home page.
- * Only if user is logged in.
+ * Only if user is logged in admin user is having admin rights.
  *
  * @param  {[type]} req
  * @param  {[type]} res
@@ -138,6 +138,28 @@ router.get('/api/admin/users/', isLoggedInAjax, function(req, res) {
             return res.json(err);
         }
         return res.json(users); // return all users in JSON format
+    });
+});
+
+/**
+ * route to delete user based on user id.
+ * Only if user is logged in and user is having admin rights.
+ *
+ * @param  {[type]} req
+ * @param  {[type]} res
+ * @return {[type]}
+ */
+router.delete('/api/admin/users/:id', isLoggedInAjax, isAdminLoggedIn, function(req, res) {
+    User.findOne({ _id: req.params.id}).exec(function(err, user){
+        if(err){
+            return res.json(err);
+        }
+        if(user){
+            user.remove();
+            return res.json( { redirect: '/admin' } );
+        }else{
+            return res.json(err);
+        }
     });
 });
 
@@ -170,6 +192,46 @@ router.get('/api/hotels/:id?', isLoggedInAjax, function(req, res){
             return res.json(hotels); // return all hotels in JSON format
         });
     }
+});
+
+/**
+ * route to create new hotel based on request data.
+ * Only if user is logged in and user is having admin rights.
+ *
+ * @param  {[type]} req
+ * @param  {[type]} res
+ * @return {[type]}
+ */
+router.post('/api/admin/hotels', isLoggedInAjax, isAdminLoggedIn, function(req, res) {
+    var hotel = new Hotel(req.body);
+    hotel.save(function(err) {
+        if (err) {
+            throw err;
+        }
+        return res.json( { redirect: '/admin' } );
+    });
+});
+
+/**
+ * route to delete hotel based on hotel id.
+ * Only if user is logged in and user is having admin rights.
+ *
+ * @param  {[type]} req
+ * @param  {[type]} res
+ * @return {[type]}
+ */
+router.delete('/api/admin/hotels/:id', isLoggedInAjax, isAdminLoggedIn, function(req, res) {
+    Hotel.findOne({ _id: req.params.id}).exec(function(err, hotel){
+        if(err){
+            return res.json(err);
+        }
+        if(hotel){
+            hotel.remove();
+            return res.json( { redirect: '/admin' } );
+        }else{
+            return res.json(err);
+        }
+    });
 });
 
 /**

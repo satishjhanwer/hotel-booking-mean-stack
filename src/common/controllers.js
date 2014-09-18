@@ -56,7 +56,6 @@
     .controller('LoginController', ['$scope', '$location', 'SessionService','growl', function($scope, $location, sessionService, growl) {
         $scope.login = function() {
             sessionService.login(this.email,this.password).success(function(data){
-                console.log(data);
                 if(!data.error){
                     sessionService.authSuccess(data);
                     if(data.isAdmin){
@@ -75,24 +74,39 @@
         $scope.signup = function(){
             var user = { email: this.email, password: this.password, firstName: this.firstName,
                 lastName: this.lastName};
-            userService.create(user).success(function(data) {
-                console.log(data);
-            });
+            userService.create(user).success(function(data) {});
         };
     }])
-    .controller('AdminController', ['$scope', 'HotelService', 'UserService', function($scope, hotelService, userService) {
+    .controller('AdminController', ['$scope', '$location','HotelService', 'UserService', function($scope, $location, hotelService, userService) {
         $scope.hotels = {};
         $scope.users = {};
+        $scope.newHotel = {};
 
         $scope.init = function() {
+            $scope.newHotel = {};
             userService.get().success(function(data) {
-                console.log(data);
                 $scope.users = data;
             });
             hotelService.get().success(function(data) {
-                console.log(data);
                 $scope.hotels = data;
             });
+        };
+
+        $scope.createHotel = function() {
+            $scope.hotelForm.submitAttempt = true;
+            if ($scope.hotelForm.$valid) {
+                $scope.addHotel = false;
+                hotelService.create($scope.newHotel);
+                $scope.init();
+            }
+        };
+
+        $scope.deleteUser = function(id) {
+            userService.delete(id).success(function(data) {});
+        };
+
+        $scope.deleteHotel = function(id) {
+            hotelService.delete(id).success(function(data) {});
         };
     }])
     .controller('ProfileController', ['$scope', 'HotelService', 'UserService', 'SessionService', 'BookingService', function($scope, hotelService, userService, sessionService, bookingService) {
@@ -187,9 +201,7 @@
                 creditCardName : $scope.booking.creditCardName,
                 hotel: $scope.hotel
             };
-            bookingService.create(newBooking).success(function(data){
-                console.log(data);
-            });
+            bookingService.create(newBooking).success(function(data){});
         };
 
         $scope.backToSearch = function() {

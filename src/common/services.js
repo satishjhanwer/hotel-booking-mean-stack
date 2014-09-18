@@ -58,10 +58,10 @@
                 return $http.get('/api/hotels/' + id);
             },
             create: function(hotelData) {
-                return $http.post('/api/hotels', hotelData);
+                return $http.post('/api/admin/hotels', hotelData);
             },
             delete: function(id) {
-                return $http.delete('/api/hotels/' + id);
+                return $http.delete('/api/admin/hotels/' + id);
             },
             search: function(term) {
                 return $http.post('/api/hotels/search',{term:term});
@@ -88,6 +88,9 @@
             },
             create: function(userData) {
                 return $http.post('/signup', userData);
+            },
+            delete: function(id) {
+                return $http.delete('/api/admin/users/' + id);
             }
         };
     }]);

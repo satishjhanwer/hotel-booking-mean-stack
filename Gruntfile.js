@@ -222,7 +222,7 @@ module.exports = function(grunt) {
                 }
             },
             frontend_html: {
-                files: './public/templates/**/*.html',
+                files: './src/templates/**/*.html',
                 tasks: ['htmlmin'],
                 options: {
                     livereload: true
@@ -241,7 +241,7 @@ module.exports = function(grunt) {
     grunt.registerTask('default', ['concurrent:prod']);
 
     // Development task
-    grunt.registerTask('dev', ['bower:install', 'jshint', 'concurrent:dev']);
+    grunt.registerTask('dev', ['bower:install', 'cleaner', 'jshint', 'concurrent:dev']);
 
     // clean concat and minification task
     grunt.registerTask('cleaner', ['clean', 'bower_concat','concat', 'concat_css', 'copy', 'cssmin', 'htmlmin','imagemin', 'uglify']);
