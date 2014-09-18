@@ -198,7 +198,7 @@ router.post('/api/hotels/search', isLoggedInAjax, function(req, res){
             }
             var resultHotels = [];
             for (var i = hotels.length-1; i >= 0; i--) {
-                if (bookings.indexOf(hotels[i]) != -1) {
+                if (bookings.indexOf(hotels[i]) !==-1) {
                     resultHotels.push(hotels);
                 }
             }

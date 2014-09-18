@@ -40,7 +40,7 @@
             link: function(scope, elm, attrs, ctrl){
                 scope.$watch('[booking.month,booking.year]',function(value){
                     ctrl.$setValidity('invalid',true);
-                    if (scope.booking.year == scope.currentYear && scope.booking.month <= scope.currentMonth){
+                    if (parseInt(scope.booking.year) === scope.currentYear && scope.booking.month <= scope.currentMonth){
                         ctrl.$setValidity('invalid',false);
                     }
                     return value;

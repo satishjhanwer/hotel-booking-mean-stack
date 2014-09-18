@@ -29,19 +29,25 @@ module.exports = function(grunt) {
                 exclude: ['fontawesome'],
                 bowerOptions: {
                     relative: false
+                },
+                dependencies: {
+                    'bootstrap': 'jquery',
+                    'bootstrap3-datetimepicker': ['jquery', 'moment'],
                 }
             }
         },
 
-        clean: ['<%= concat.all.dest %>','<%= concat.css.dest %>', '<%= bower_concat.all.dest %>', '<%= copy.main.dest %>'],
+        clean: ['<%= concat.all.dest %>','<%= concat_css.all.dest %>', '<%= bower_concat.all.dest %>', '<%= copy.main.dest %>'],
 
         cssmin: {
             options: {
-                report: 'gzip'
+                keepSpecialComments: 0,
+                report: 'gzip',
+                banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - ' + '<%= grunt.template.today("yyyy-mm-dd") %> */',
             },
             css: {
-                src: '<%= concat.css.dest %>',
-                dest: '<%= concat.css.dest %>'
+                src: '<%= concat_css.all.dest %>',
+                dest: '<%= concat_css.all.dest %>'
             }
         },
 
@@ -70,21 +76,22 @@ module.exports = function(grunt) {
                 dest: './public/fonts/',
                 flatten: true,
                 filter: 'isFile',
+            },
+            datetimepicker: {
+                expand: true,
+                cwd: './src/lib/bootstrap3-datetimepicker/build/js/',
+                src: '**',
+                dest: './public/js/',
+                flatten: true,
+                filter: 'isFile',
             }
         },
 
-        concat: {
+        concat_css: {
             options: {
-                separator: ';',
+
             },
             all: {
-                src: ['./src/common/**/*.js', './src/core/**/*.js'],
-                dest: './public/js/<%= pkg.name %>.js',
-            },
-            css: {
-                options: {
-                    separator: ''
-                },
                 src: [
                     './src/lib/bootstrap/dist/css/bootstrap.css',
                     './src/lib/bootstrap3-datetimepicker/build/css/bootstrap-datetimepicker.css',
@@ -92,6 +99,18 @@ module.exports = function(grunt) {
                     './src/css/style.css'
                 ],
                 dest: './public/css/<%= pkg.name %>.css',
+            },
+        },
+
+        concat: {
+            options: {
+                separator: ';',
+                stripBanners: true,
+                banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - ' + '<%= grunt.template.today("yyyy-mm-dd") %> */',
+            },
+            all: {
+                src: ['./src/common/**/*.js', './src/core/**/*.js'],
+                dest: './public/js/<%= pkg.name %>.js',
             }
         },
 
@@ -195,7 +214,7 @@ module.exports = function(grunt) {
     grunt.registerTask('default', ['build', 'concurrent']);
 
     // clean, concat and uglify
-    grunt.registerTask('ccu', ['clean', 'copy', 'concat', 'bower_concat', 'cssmin', 'imagemin', 'uglify']);
+    grunt.registerTask('ccu', ['clean', 'copy', 'concat_css', 'concat', 'bower_concat', 'cssmin', 'imagemin', 'uglify']);
 
     // Build task.
     grunt.registerTask('build', ['bower:install', 'jshint', 'ccu', 'env:dev']);
