@@ -1,0 +1,18 @@
+#!/usr/bin/env node
+var debug = require('debug')('hotel-booking-mean-stack');
+var https = require('https');
+var fs    = require('fs');
+var app   = require('../server');
+
+var PORT = process.env.PORT || 8443;
+var HOST = process.env.HOST || '127.0.0.1';
+
+var options = {
+    key  : fs.readFileSync('./server/ssl-config/key.pem'),
+    ca   : fs.readFileSync('./server/ssl-config/csr.pem'),
+    cert : fs.readFileSync('./server/ssl-config/cert.pem')
+};
+
+https.createServer(options, app).listen(PORT, HOST, null, function() {
+    console.log('Server listening on port %d in %s mode', this.address().port, app.settings.env);
+});
