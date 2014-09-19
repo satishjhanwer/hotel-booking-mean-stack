@@ -18,8 +18,11 @@
             },
             logout: function() {
                 var scope = this;
-                $http.post('/logout').success(function(){
-                    scope.resetSession();
+                $http.post('/logout').success(function(data){
+                    if(data.success){
+                        scope.resetSession();
+                        $location.path('/index');
+                    }
                 });
             },
             isAdminLoggedIn: function() {

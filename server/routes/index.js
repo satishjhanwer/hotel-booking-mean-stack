@@ -121,7 +121,7 @@ router.post('/login', function(req, res, next) {
  */
 router.post('/logout', function(req, res) {
     req.logout();
-    res.json({ redirect: '/logout' });
+    res.json({ success: 'You have been logout successfully!!!.' });
 });
 
 /**
