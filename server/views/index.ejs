@@ -9,6 +9,11 @@
             <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <![endif]-->
         <link href="/css/hotel-booking-mean-stack.css" rel="stylesheet" />
+        <style>
+            [ng-cloak]{
+                display: none !important;
+            }
+        </style>
         <script type="text/javascript">
             window.user = <%- JSON.stringify(user) %>
         </script>
@@ -30,8 +35,8 @@
                 <div class="right-div">
                     <a href="/login" ng-hide="session.isLoggedIn && session.currentUser" class="btn btn-info pull-right">Login</a>
                     <a href="/signup" ng-hide="session.isLoggedIn && session.currentUser" class="btn btn-info">Signup</a>&nbsp;
-                    <span ng-show="session.isLoggedIn && session.currentUser" ng-bind="'Welcome ' + session.currentUser.firstName"></span>&nbsp;&nbsp;
-                    <a href="javascript:" ng-show="session.isLoggedIn && session.currentUser" class="btn btn-info pull-right" ng-click="logout()">Logout</a>
+                    <span ng-if="session.isLoggedIn && session.currentUser" ng-bind="'Welcome ' + session.currentUser.firstName"></span>&nbsp;&nbsp;
+                    <a href="javascript:" ng-if="session.isLoggedIn && session.currentUser" class="btn btn-info pull-right" ng-click="logout()">Logout</a>
                 </div>
             </div>
         </div>
