@@ -126,13 +126,13 @@ router.post('/logout', function(req, res) {
 
 /**
  * route to load user date on user home page.
- * Only if user is logged in admin user is having admin rights.
+ * Only if user is logged in and user is having admin rights.
  *
  * @param  {[type]} req
  * @param  {[type]} res
  * @return {[type]}
  */
-router.get('/api/admin/users/', isLoggedInAjax, function(req, res) {
+router.get('/api/admin/users/', isLoggedInAjax, isAdminLoggedIn, function(req, res) {
     User.find().where('_id').ne(req.user._id).sort('firstName').exec(function(err, users){
         if (err) {
             return res.json(err);
