@@ -1,18 +1,18 @@
-var express  = require('express');
+var express = require('express');
 var mongoose = require('mongoose');
 var passport = require('passport');
-var path     = require('path');
+var path = require('path');
 
-var helmet       = require('helmet');
-var logger       = require('morgan');
-var session      = require('express-session');
-var favicon      = require('serve-favicon');
-var bodyParser   = require('body-parser');
-var compression  = require('compression');
+var helmet = require('helmet');
+var logger = require('morgan');
+var session = require('express-session');
+var favicon = require('serve-favicon');
+var bodyParser = require('body-parser');
+var compression = require('compression');
 var cookieParser = require('cookie-parser');
 
-var configDB     = require('./server/config/database');
-var routes       = require('./server/routes/index');
+var configDB = require('./server/config/database');
+var routes = require('./server/routes/index');
 
 var app = express();
 
@@ -36,12 +36,7 @@ app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
 
 // http header setup for various attacks.
-app.use(helmet.xssFilter({ setOnOldIE: true }));
-app.use(helmet.xframe('deny'));
-app.use(helmet.hsts({ maxAge: 7776000000 }));
-app.use(helmet.nosniff());
-app.use(helmet.nocache());
-app.use(helmet.crossdomain());
+app.use(helmet());
 
 // setting up body and cookie parsers.
 app.use(bodyParser.json());
@@ -49,11 +44,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 // configuration required for passport
-app.use(session({secret: 'thisisassessionsecretwhichwillbetoolongtotraceback'}));
+app.use(session({ secret: 'thisisassessionsecretwhichwillbetoolongtotraceback' }));
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 
-app.use(express.static(path.join(__dirname, '/public'), {maxAge: 60000})); //Expose //public
+app.use(express.static(path.join(__dirname, '/public'), { maxAge: 60000 })); //Expose //public
 
 app.use(compression()); // Setting up compression technique.
 
@@ -61,7 +56,7 @@ app.use(compression()); // Setting up compression technique.
 app.use('/', routes);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
     var err = new Error('Not Found');
     err.status = 404;
     next(err);
@@ -72,7 +67,7 @@ app.use(function(req, res, next) {
 // development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {
-    app.use(function(err, req, res, next) {
+    app.use(function (err, req, res, next) {
         res.status(err.status || 500);
         res.render('error', {
             message: err.message,
@@ -83,7 +78,7 @@ if (app.get('env') === 'development') {
 
 // production error handler
 // no stacktraces leaked to user
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
     res.status(err.status || 500);
     console.log(err.message);
     res.render('error', {
