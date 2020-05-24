@@ -13,8 +13,8 @@
 					})
 					.when("/signup", {
 						templateUrl: "/templates/signup.html",
-						controller: "SignupController",
-						controllerAs: "signup",
+						controller: "SignUpController",
+						controllerAs: "signUp",
 						caseInsensitiveMatch: true,
 					})
 					.when("/login", {
@@ -90,11 +90,11 @@
 				};
 			},
 		])
-		.controller("SignupController", [
+		.controller("SignUpController", [
 			"$scope",
 			"UserService",
 			function ($scope, userService) {
-				$scope.signup = function () {
+				$scope.signUp = function () {
 					var user = {
 						email: this.email,
 						password: this.password,

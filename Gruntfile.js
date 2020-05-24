@@ -1,248 +1,270 @@
-module.exports = function(grunt) {
+module.exports = function (grunt) {
+	// Plugin loading
+	require("load-grunt-tasks")(grunt);
 
-    // Plugin loading
-    require('load-grunt-tasks')(grunt);
+	//Initializing the configuration object
+	grunt.initConfig({
+		pkg: grunt.file.readJSON("package.json"),
 
-        //Initializing the configuration object
-    grunt.initConfig({
+		// Task configuration
+		bower: {
+			install: {
+				options: {
+					targetDir: "./src/lib",
+					layout: "byComponent",
+					install: true,
+					verbose: false,
+					cleanTargetDir: false,
+					cleanBowerDir: false,
+					bowerOptions: {},
+				},
+			},
+		},
 
-        pkg: grunt.file.readJSON('package.json'),
+		bower_concat: {
+			all: {
+				dest: "./public/js/<%= pkg.name %>-lib.js",
+				exclude: ["fontawesome"],
+				bowerOptions: {
+					relative: false,
+				},
+				dependencies: {
+					bootstrap: "jquery",
+					"bootstrap3-datetimepicker": ["jquery", "moment"],
+				},
+			},
+		},
 
-        // Task configuration
-        bower: {
-            install: {
-                options: {
-                    targetDir: './src/lib',
-                    layout: 'byComponent',
-                    install: true,
-                    verbose: false,
-                    cleanTargetDir: false,
-                    cleanBowerDir: false,
-                    bowerOptions: {}
-                }
-            }
-        },
+		clean: ["./public/"],
 
-        bower_concat: {
-            all: {
-                dest: './public/js/<%= pkg.name %>-lib.js',
-                exclude: ['fontawesome'],
-                bowerOptions: {
-                    relative: false
-                },
-                dependencies: {
-                    'bootstrap': 'jquery',
-                    'bootstrap3-datetimepicker': ['jquery', 'moment'],
-                }
-            }
-        },
+		concurrent: {
+			dev: {
+				options: {
+					logConcurrentOutput: true,
+				},
+				tasks: ["watch", "env:dev", "nodemon:dev"],
+			},
+			prod: {
+				options: {
+					logConcurrentOutput: true,
+				},
+				tasks: ["watch", "env:prod", "nodemon:prod"],
+			},
+		},
 
-        clean: ['./public/'],
+		concat: {
+			options: {
+				separator: ";",
+				stripBanners: true,
+				banner: "/*! <%= pkg.name %> - v<%= pkg.version %> - " + '<%= grunt.template.today("yyyy-mm-dd") %> */',
+			},
+			all: {
+				src: ["./src/common/**/*.js", "./src/core/**/*.js"],
+				dest: "./public/js/<%= pkg.name %>.js",
+			},
+		},
 
-        concurrent: {
-            dev: {
-                options: {
-                    logConcurrentOutput: true
-                },
-                tasks: ['watch', 'env:dev', 'nodemon:dev']
-            },
-            prod: {
-                options: {
-                    logConcurrentOutput: true
-                },
-                tasks: ['watch', 'env:prod', 'nodemon:prod']
-            }
-        },
+		concat_css: {
+			all: {
+				src: [
+					"./src/lib/bootstrap/dist/css/bootstrap.css",
+					"./src/lib/bootstrap3-datetimepicker/build/css/bootstrap-datetimepicker.css",
+					"./src/lib/fontawesome/css/font-awesome.css",
+					"./src/css/style.css",
+				],
+				dest: "./public/css/<%= pkg.name %>.css",
+			},
+		},
 
-        concat: {
-            options: {
-                separator: ';',
-                stripBanners: true,
-                banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - ' + '<%= grunt.template.today("yyyy-mm-dd") %> */',
-            },
-            all: {
-                src: ['./src/common/**/*.js', './src/core/**/*.js'],
-                dest: './public/js/<%= pkg.name %>.js',
-            }
-        },
+		copy: {
+			all: {
+				expand: true,
+				cwd: "./src/lib/fontawesome/fonts/",
+				src: "**",
+				dest: "./public/fonts/",
+				flatten: true,
+				filter: "isFile",
+			},
+			favicon: {
+				expand: true,
+				cwd: "./src/images/",
+				src: "*.ico",
+				dest: "./public/",
+				flatten: true,
+				filter: "isFile",
+			},
+		},
 
-        concat_css: {
-            all: {
-                src: [
-                    './src/lib/bootstrap/dist/css/bootstrap.css',
-                    './src/lib/bootstrap3-datetimepicker/build/css/bootstrap-datetimepicker.css',
-                    './src/lib/fontawesome/css/font-awesome.css',
-                    './src/css/style.css'
-                ],
-                dest: './public/css/<%= pkg.name %>.css',
-            },
-        },
+		cssmin: {
+			options: {
+				keepSpecialComments: 0,
+				report: "gzip",
+				banner: "/*! <%= pkg.name %> - v<%= pkg.version %> - " + '<%= grunt.template.today("yyyy-mm-dd") %> */',
+			},
+			css: {
+				src: "<%= concat_css.all.dest %>",
+				dest: "<%= concat_css.all.dest %>",
+			},
+		},
 
-        copy: {
-            all: {
-                expand: true,
-                cwd: './src/lib/fontawesome/fonts/',
-                src: '**',
-                dest: './public/fonts/',
-                flatten: true,
-                filter: 'isFile',
-            },
-            favicon: {
-                expand: true,
-                cwd: './src/images/',
-                src: '*.ico',
-                dest: './public/',
-                flatten: true,
-                filter: 'isFile',
-            }
-        },
+		env: {
+			dev: {
+				NODE_ENV: "development",
+				PORT: 3000,
+			},
+			test: {
+				NODE_ENV: "test",
+			},
+			prod: {
+				NODE_ENV: "production",
+				PORT: 8443,
+			},
+		},
 
-        cssmin: {
-            options: {
-                keepSpecialComments: 0,
-                report: 'gzip',
-                banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - ' + '<%= grunt.template.today("yyyy-mm-dd") %> */',
-            },
-            css: {
-                src: '<%= concat_css.all.dest %>',
-                dest: '<%= concat_css.all.dest %>'
-            }
-        },
+		htmlmin: {
+			dist: {
+				options: {
+					removeComments: true,
+					collapseWhitespace: true,
+				},
+				files: [
+					{
+						expand: true,
+						cwd: "./src/templates/",
+						src: ["**/*.html"],
+						dest: "./public/templates/",
+					},
+				],
+			},
+		},
 
-        env: {
-            dev : {
-                NODE_ENV : 'development',
-                PORT: 3000
-            },
-            test : {
-                NODE_ENV : 'test'
-            },
-            prod : {
-                NODE_ENV : 'production',
-                PORT: 8443
-            }
-        },
+		imagemin: {
+			all: {
+				options: {
+					optipng: true,
+					gifsicle: true,
+					jpegtran: true,
+					svgo: true,
+					optimizationLevel: 7,
+				},
+				files: [
+					{
+						expand: true,
+						cwd: "./src/images/",
+						src: ["**/*.{png,jpg,gif}"],
+						dest: "./public/img/",
+					},
+				],
+			},
+		},
 
-        htmlmin: {
-            dist: {
-                options: {
-                    removeComments: true,
-                    collapseWhitespace: true
-                },
-                files: [{
-                    expand: true,
-                    cwd: './src/templates/',
-                    src: ['**/*.html'],
-                    dest: './public/templates/'
-                }]
-            }
-        },
+		jshint: {
+			files: ["gruntfile.js", "./server/**/*.js", "./src/common/**/*.js", "./src/core/**/*.js"],
 
-        imagemin: {
-            all: {
-                options: {
-                    optipng: true,
-                    gifsicle: true,
-                    jpegtran: true,
-                    svgo: true,
-                    optimizationLevel: 7
-                },
-                files: [{
-                    expand: true,
-                    cwd: './src/images/',
-                    src: ['**/*.{png,jpg,gif}'],
-                    dest: './public/img/'
-                }]
-            }
-        },
+			options: {
+				curly: true,
+				eqeqeq: true,
+				immed: true,
+				latedef: true,
+				newcap: true,
+				noarg: true,
+				sub: true,
+				undef: true,
+				boss: true,
+				eqnull: true,
+				globals: {
+					require: false,
+					__dirname: false,
+					console: false,
+					module: false,
+					exports: false,
+					angular: true,
+					node: true,
+					jQuery: true,
+					window: true,
+				},
+			},
+		},
 
-        jshint: {
-            files: ['gruntfile.js', './server/**/*.js', './src/common/**/*.js', './src/core/**/*.js'],
+		nodemon: {
+			dev: {
+				script: "./bin/www",
+			},
+			prod: {
+				script: "./bin/www-prod",
+			},
+		},
 
-            options: {
-                curly: true,
-                eqeqeq: true,
-                immed: true,
-                latedef: true,
-                newcap: true,
-                noarg: true,
-                sub: true,
-                undef: true,
-                boss: true,
-                eqnull: true,
-                globals: { require: false, __dirname: false, console: false, module: false, exports: false, angular: true, node: true, jQuery: true, window: true }
-            }
-        },
+		uglify: {
+			options: {
+				mangle: false,
+			},
+			frontend: {
+				files: {
+					"<%= bower_concat.all.dest %>": "<%= bower_concat.all.dest %>",
+				},
+			},
+			backend: {
+				files: {
+					"<%= concat.all.dest %>": "<%= concat.all.dest %>",
+				},
+			},
+		},
 
-        nodemon: {
-            dev: {
-                script: './bin/www'
-            },
-            prod: {
-                script: './bin/www-prod'
-            }
-        },
-
-        uglify: {
-            options: {
-                mangle: false
-            },
-            frontend: {
-                files: {
-                    '<%= bower_concat.all.dest %>': '<%= bower_concat.all.dest %>',
-                }
-            },
-            backend: {
-                files: {
-                    '<%= concat.all.dest %>': '<%= concat.all.dest %>',
-                }
-            }
-        },
-
-        watch: {
-            frontend_css: {
-                files: '<%= concat_css.all.dest %>',
-                tasks: ['concat_css','cssmin'],
-                options: {
-                    livereload: true
-                }
-            },
-            frontend_img: {
-                files: './src/images/',
-                tasks: ['imagemin'],
-                options: {
-                    livereload: true
-                }
-            },
-            frontend_js: {
-                files: '<%= concat.all.src %>',
-                tasks: ['concat','jshint','uglify:backend'],
-                options: {
-                    livereload: true
-                }
-            },
-            frontend_html: {
-                files: './src/templates/**/*.html',
-                tasks: ['htmlmin'],
-                options: {
-                    livereload: true
-                }
-            }/*,
+		watch: {
+			frontend_css: {
+				files: "<%= concat_css.all.dest %>",
+				tasks: ["concat_css", "cssmin"],
+				options: {
+					livereload: true,
+				},
+			},
+			frontend_img: {
+				files: "./src/images/",
+				tasks: ["imagemin"],
+				options: {
+					livereload: true,
+				},
+			},
+			frontend_js: {
+				files: "<%= concat.all.src %>",
+				tasks: ["concat", "jshint", "uglify:backend"],
+				options: {
+					livereload: true,
+				},
+			},
+			frontend_html: {
+				files: "./src/templates/**/*.html",
+				tasks: ["htmlmin"],
+				options: {
+					livereload: true,
+				},
+			} /*,
             livereload: {
                 options: {
                     livereload: true
                 },
                 files: []
-            }*/
-        }
-    });
+            }*/,
+		},
+	});
 
-    // Default task will run in production
-    grunt.registerTask('default', ['concurrent:prod']);
+	// Default task will run in production
+	grunt.registerTask("default", ["concurrent:prod"]);
 
-    // Development task
-    grunt.registerTask('dev', ['bower:install', 'cleaner', 'jshint', 'concurrent:dev']);
+	// Development task
+	grunt.registerTask("dev", ["bower:install", "cleaner", "jshint", "concurrent:dev"]);
 
-    // clean concat and minification task
-    grunt.registerTask('cleaner', ['clean', 'bower_concat','concat', 'concat_css', 'copy', 'cssmin', 'htmlmin','imagemin', 'uglify']);
+	// clean concat and minification task
+	grunt.registerTask("cleaner", [
+		"clean",
+		"bower_concat",
+		"concat",
+		"concat_css",
+		"copy",
+		"cssmin",
+		"htmlmin",
+		"imagemin",
+		"uglify",
+	]);
 };

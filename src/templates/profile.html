@@ -5,10 +5,12 @@
                 <div class="row" style="padding-bottom: 10px;">
                     <div style="padding: 0 8px;" growl></div>
                     <div class="col-md-3">
-                        <input type="text" ng-model="term" class="input-sm col-md-12" placeholder="Search Hotel">
+                        <input type="text" ng-model="term" class="input-sm col-md-12" placeholder="Search Hotel" />
                     </div>
                     <div class="col-md-1">
-                        <button class="btn btn-primary btn-block" ng-click="searchHotels()" type="button">Search</button>
+                        <button class="btn btn-primary btn-block" ng-click="searchHotels()" type="button">
+                            Search
+                        </button>
                     </div>
                 </div>
                 <div class="panel panel-default">
@@ -33,7 +35,7 @@
                                         <td>{{hotel.address}}</td>
                                         <td>{{hotel.city}} - {{hotel.state}}</td>
                                         <td>{{hotel.zip}}</td>
-                                        <td><a href="#/view-hotel/{{hotel._id}}" >View Hotel</a></td>
+                                        <td><a href="#/view-hotel/{{hotel._id}}">View Hotel</a></td>
                                     <tr>
                                 </tbody>
                             </table>

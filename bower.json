@@ -1,35 +1,19 @@
 {
-    "name": "hotel-booking-mean-stack",
-    "version": "1.0.0",
-    "homepage": "https://github.com/satishjhanwer/hotel-booking-mean-stack",
-    "description": "Using MEAN stack to implement a simple hotel booking application where user can search hotels in database and book them.",
-    "moduleType": [
-        "node"
-    ],
-    "keywords": [
-        "node",
-        "express",
-        "angular",
-        "mongodb"
-    ],
-    "authors": [
-        "Satish Jhanwer"
-    ],
-    "license": "MIT",
-    "ignore": [
-        "**/.*",
-        "node_modules",
-        "bower_components",
-        "src/lib",
-        "test",
-        "tests"
-    ],
-    "dependencies": {
-        "angular-resource": "1.x.x",
-        "angular-cookies": "1.x.x",
-        "angular-route": "1.x.x",
-        "bootstrap": "3.x.x",
-        "bootstrap3-datetimepicker": "3.x.x",
-        "fontawesome": "4.x.x"
-    }
+	"name": "hotel-booking-mean-stack",
+	"version": "1.0.0",
+	"homepage": "https://github.com/satishjhanwer/hotel-booking-mean-stack",
+	"description": "Using MEAN stack to implement a simple hotel booking application where user can search hotels in database and book them.",
+	"moduleType": ["node"],
+	"keywords": ["node", "express", "angular", "mongodb"],
+	"authors": ["Satish Jhanwer"],
+	"license": "MIT",
+	"ignore": ["**/.*", "node_modules", "bower_components", "src/lib", "test", "tests"],
+	"dependencies": {
+		"angular-resource": "1.x.x",
+		"angular-cookies": "1.x.x",
+		"angular-route": "1.x.x",
+		"bootstrap": "3.x.x",
+		"bootstrap3-datetimepicker": "3.x.x",
+		"fontawesome": "4.x.x"
+	}
 }
