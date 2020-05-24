@@ -14,6 +14,8 @@
 		"angular-route": "1.x.x",
 		"bootstrap": "3.x.x",
 		"bootstrap3-datetimepicker": "3.x.x",
-		"fontawesome": "4.x.x"
+		"fontawesome": "4.x.x",
+		"jquery": "3.x.x",
+		"moment": "2.x.x"
 	}
 }

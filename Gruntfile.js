@@ -255,7 +255,7 @@ module.exports = function (grunt) {
 	// Development task
 	grunt.registerTask("dev", ["bower:install", "cleaner", "jshint", "concurrent:dev"]);
 
-	// clean concat and minification task
+	// clean concat and minimization task
 	grunt.registerTask("cleaner", [
 		"clean",
 		"bower_concat",

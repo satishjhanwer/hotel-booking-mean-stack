@@ -2,46 +2,6 @@
 # yarn lockfile v1
 
 
-"@bower_components/angular-cookies@angular/bower-angular-cookies#1.x.x":
-  version "1.7.9"
-  resolved "https://codeload.github.com/angular/bower-angular-cookies/tar.gz/9d2e49488662321c95d65d8d2423842184ba2696"
-
-"@bower_components/angular-resource@angular/bower-angular-resource#1.x.x":
-  version "1.7.9"
-  resolved "https://codeload.github.com/angular/bower-angular-resource/tar.gz/045acd795b95c02d84f266cb0154db998151a820"
-
-"@bower_components/angular-route@angular/bower-angular-route#1.x.x":
-  version "1.7.9"
-  resolved "https://codeload.github.com/angular/bower-angular-route/tar.gz/ff545591491260ebff98892fac5b26bc34b7e4c4"
-
-"@bower_components/angular@angular/bower-angular#1.7.9":
-  version "1.7.9"
-  resolved "https://codeload.github.com/angular/bower-angular/tar.gz/84a5b810f33f82a552cee361268b77181691ce65"
-
-"@bower_components/bootstrap3-datetimepicker@Eonasdan/bootstrap-datetimepicker#3.x.x":
-  version "3.1.3"
-  resolved "https://codeload.github.com/Eonasdan/bootstrap-datetimepicker/tar.gz/b04a8eeffaa960d6e90e1714a3eca18eef8b4a3c"
-  dependencies:
-    bootstrap "^3.0"
-    jquery "^1.8.3"
-    moment "~2.8.1"
-
-"@bower_components/bootstrap@twbs/bootstrap#3.x.x":
-  version "3.4.1"
-  resolved "https://codeload.github.com/twbs/bootstrap/tar.gz/68b0d231a13201eb14acd3dc84e51543d16e5f7e"
-
-"@bower_components/fontawesome@FortAwesome/Font-Awesome#4.x.x":
-  version "4.7.0"
-  resolved "https://codeload.github.com/FortAwesome/Font-Awesome/tar.gz/a8386aae19e200ddb0f6845b5feeee5eb7013687"
-
-"@bower_components/jquery@jquery/jquery-dist#>=1.8.3":
-  version "3.5.1"
-  resolved "https://codeload.github.com/jquery/jquery-dist/tar.gz/4c0e4becb8263bb5b3e6dadc448d8e7305ef8215"
-
-"@bower_components/moment@moment/moment#>=2.8.0":
-  version "2.26.0"
-  resolved "https://codeload.github.com/moment/moment/tar.gz/a0f3c74374b638b769d9ab1ae54ba5266ef0976f"
-
 abbrev@1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/abbrev/-/abbrev-1.1.1.tgz#f8f2c887ad10bf67f634f005b6987fed3179aac8"
@@ -367,11 +327,6 @@ body-parser@~1.14.0:
     qs "5.2.0"
     raw-body "~2.1.5"
     type-is "~1.6.10"
-
-bootstrap@^3.0:
-  version "3.4.1"
-  resolved "https://registry.yarnpkg.com/bootstrap/-/bootstrap-3.4.1.tgz#c3a347d419e289ad11f4033e3c4132b87c081d72"
-  integrity sha512-yN5oZVmRCwe5aKwzRj6736nSmKDX7pLYwsXiCj/EYmo16hODaBiT4En5btW/jhBF/seV+XMx3aYwukYC3A49DA==
 
 bower-json@^0.8.1:
   version "0.8.4"
@@ -1596,11 +1551,6 @@ first-chunk-stream@^1.0.0:
   resolved "https://registry.yarnpkg.com/first-chunk-stream/-/first-chunk-stream-1.0.0.tgz#59bfb50cd905f60d7c394cd3d9acaab4e6ad934e"
   integrity sha1-Wb+1DNkF9g18OUzT2ayqtOatk04=
 
-fontawesome@4.7.2:
-  version "4.7.2"
-  resolved "https://registry.yarnpkg.com/fontawesome/-/fontawesome-4.7.2.tgz#7f0c72ac7a6b029d3375bacb23522d9acfc50a52"
-  integrity sha1-fwxyrHprAp0zdbrLI1Itms/FClI=
-
 for-in@^1.0.1, for-in@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/for-in/-/for-in-1.0.2.tgz#81068d295a8142ec0ac726c6e2200c30fb6d5e80"
@@ -2751,11 +2701,6 @@ jpegtran-bin@^3.0.0:
     bin-wrapper "^3.0.0"
     logalot "^2.0.0"
 
-jquery@^1.8.3:
-  version "1.12.4"
-  resolved "https://registry.yarnpkg.com/jquery/-/jquery-1.12.4.tgz#01e1dfba290fe73deba77ceeacb0f9ba2fec9e0c"
-  integrity sha1-AeHfuikP5z3rp3zurLD5ui/sngw=
-
 js-yaml@~3.5.2:
   version "3.5.5"
   resolved "https://registry.yarnpkg.com/js-yaml/-/js-yaml-3.5.5.tgz#0377c38017cabc7322b0d1fbcd25a491641f2fbe"
@@ -3240,11 +3185,6 @@ mkdirp@^0.5.0, mkdirp@~0.5.1:
   integrity sha512-NKmAlESf6jMGym1++R0Ra7wvhV+wFW63FaSOFPwRahvea0gMUcGUhVeAg/0BC0wiv9ih5NYPB1Wn1UEI1/L+xQ==
   dependencies:
     minimist "^1.2.5"
-
-moment@~2.8.1:
-  version "2.8.4"
-  resolved "https://registry.yarnpkg.com/moment/-/moment-2.8.4.tgz#cc174aabb19223efff5699a9467805a2789838bf"
-  integrity sha1-zBdKq7GSI+//VpmpRngFoniYOL8=
 
 mongodb-core@3.0.2:
   version "3.0.2"

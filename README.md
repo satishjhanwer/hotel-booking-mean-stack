@@ -17,7 +17,7 @@ Using MEAN stack to implement a simple hotel booking application where user can 
 ## Instructions
 
 1. Clone the repo: `git clone https://github.com/satishjhanwer/hotel-booking-mean-stack.git`
-2. Install packages: `npm install`
+2. Install packages: `yarn install`
 3. Change out the database configuration in `config/database.js`
 4. Launch: `grunt dev`
 5. Launch on Https: `grunt cleaner` then `grunt`
