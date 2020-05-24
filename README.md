@@ -29,7 +29,7 @@ Once project is up and running, create a user. Go back to your database and upda
 true for the user you have created just now. This to make sure we have one admin user which can add hotels into the
 hotels collection.
 
-```json
+```javascript
 {
 	"isAdmin": true, // Set this to true to make the user admin
 	"email": "someuser@someportal.com",
