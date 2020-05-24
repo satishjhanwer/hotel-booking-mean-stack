@@ -372,15 +372,10 @@ bower-json@^0.8.1:
     intersect "^1.0.1"
     sort-keys-length "^1.0.0"
 
-bower@^1.7.9:
+bower@1.8.8, bower@^1.7.9, bower@~1.7.7:
   version "1.8.8"
   resolved "https://registry.yarnpkg.com/bower/-/bower-1.8.8.tgz#82544be34a33aeae7efb8bdf9905247b2cffa985"
   integrity sha512-1SrJnXnkP9soITHptSO+ahx3QKp3cVzn8poI6ujqc5SeOkg5iqM1pK9H+DSc2OQ8SnO0jC/NG4Ur/UIwy7574A==
-
-bower@~1.7.7:
-  version "1.7.10"
-  resolved "https://registry.yarnpkg.com/bower/-/bower-1.7.10.tgz#e51b48ea2c07a4494481d04c081232844bac8ef2"
-  integrity sha1-5RtI6iwHpElEgdBMCBIyhEusjvI=
 
 bowser@2.9.0:
   version "2.9.0"
@@ -2009,7 +2004,7 @@ grunt-concat-css@0.3.2:
   resolved "https://registry.yarnpkg.com/grunt-concat-css/-/grunt-concat-css-0.3.2.tgz#804028a1e256be2aeb42c2966b5fef9912dcf904"
   integrity sha1-gEAooeJWvirrQsKWa1/vmRLc+QQ=
 
-grunt-concurrent@3.x.x:
+grunt-concurrent@3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/grunt-concurrent/-/grunt-concurrent-3.0.0.tgz#643e72b1110ca70d1dbcc52fc540c429456097cb"
   integrity sha512-AgXtjUJESHEGeGX8neL3nmXBTHSj1QC48ABQ3ng2/vjuSBpDD8gKcVHSlXP71pFkIR8TQHf+eomOx6OSYSgfrA==
@@ -2019,7 +2014,7 @@ grunt-concurrent@3.x.x:
     indent-string "^4.0.0"
     pad-stream "^2.0.0"
 
-grunt-contrib-clean@2.x.x:
+grunt-contrib-clean@2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/grunt-contrib-clean/-/grunt-contrib-clean-2.0.0.tgz#3be7ca480da4b740aa5e9d863e2f7e8b24f8a68b"
   integrity sha512-g5ZD3ORk6gMa5ugZosLDQl3dZO7cI3R14U75hTM+dVLVxdMNJCPVmwf9OUt4v4eWgpKKWWoVK9DZc1amJp4nQw==
@@ -2043,7 +2038,7 @@ grunt-contrib-copy@1.0.0:
     chalk "^1.1.1"
     file-sync-cmp "^0.1.0"
 
-grunt-contrib-cssmin@3.x.x:
+grunt-contrib-cssmin@3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/grunt-contrib-cssmin/-/grunt-contrib-cssmin-3.0.0.tgz#1767c0a062f4b7353c5adcadc52dcff7197d4d89"
   integrity sha512-eXpooYmVGKMs/xV7DzTLgJFPVOfMuawPD3x0JwhlH0mumq2NtH3xsxaHxp1Y3NKxp0j0tRhFS6kSBRsz6TuTGg==
@@ -2052,7 +2047,7 @@ grunt-contrib-cssmin@3.x.x:
     clean-css "~4.2.1"
     maxmin "^2.1.0"
 
-grunt-contrib-htmlmin@3.x.x:
+grunt-contrib-htmlmin@3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/grunt-contrib-htmlmin/-/grunt-contrib-htmlmin-3.1.0.tgz#4cde2653d543fb4d488bae57df70ac4491d080d6"
   integrity sha512-Khaa+0MUuqqNroDIe9tsjZkioZnW2Y+iTGbonBkLWaG7+SkSFExfb4jLt7M6rxKV3RSqlS7NtVvu4SVIPkmKXg==
@@ -2061,7 +2056,7 @@ grunt-contrib-htmlmin@3.x.x:
     html-minifier "^4.0.0"
     pretty-bytes "^5.1.0"
 
-grunt-contrib-imagemin@4.x.x:
+grunt-contrib-imagemin@4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/grunt-contrib-imagemin/-/grunt-contrib-imagemin-4.0.0.tgz#ae917feb0514aedc3d24c90579b1341d577f2cd3"
   integrity sha512-2GYQBQFfJLjeTThJ8E7+vLgvgfOh78u0bgieIK85c2Rv9V6ssd2AvBvuF7T26mK261EN/SlNefpW5+zGWzfrVw==
@@ -2077,7 +2072,7 @@ grunt-contrib-imagemin@4.x.x:
     imagemin-optipng "^6.0.0"
     imagemin-svgo "^7.0.0"
 
-grunt-contrib-jshint@2.x.x:
+grunt-contrib-jshint@2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/grunt-contrib-jshint/-/grunt-contrib-jshint-2.1.0.tgz#3d789807579034299da1b41c4d70e1ba722973ed"
   integrity sha512-65S2/C/6RfjY/umTxfwXXn+wVvaYmykHkHSsW6Q6rhkbv3oudTEgqnFFZvWzWCoHUb+3GMZLbP3oSrNyvshmIQ==
@@ -2086,7 +2081,7 @@ grunt-contrib-jshint@2.x.x:
     hooker "^0.2.3"
     jshint "~2.10.2"
 
-grunt-contrib-uglify@4.x.x:
+grunt-contrib-uglify@4.0.1:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/grunt-contrib-uglify/-/grunt-contrib-uglify-4.0.1.tgz#68a7b62fa045ce8e2c7574d1bdcd3b96b8a686b1"
   integrity sha512-dwf8/+4uW1+7pH72WButOEnzErPGmtUvc8p08B0eQS/6ON0WdeQu0+WFeafaPTbbY1GqtS25lsHWaDeiTQNWPg==
@@ -2096,7 +2091,7 @@ grunt-contrib-uglify@4.x.x:
     uglify-js "^3.5.0"
     uri-path "^1.0.0"
 
-grunt-contrib-watch@1.x.x:
+grunt-contrib-watch@1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/grunt-contrib-watch/-/grunt-contrib-watch-1.1.0.tgz#c143ca5b824b288a024b856639a5345aedb78ed4"
   integrity sha512-yGweN+0DW5yM+oo58fRu/XIRrPcn3r4tQx+nL7eMRwjpvk+rQY6R8o94BPK0i2UhTg9FN21hS+m8vR8v9vXfeg==
@@ -2106,7 +2101,7 @@ grunt-contrib-watch@1.x.x:
     lodash "^4.17.10"
     tiny-lr "^1.1.1"
 
-grunt-env@1.x.x:
+grunt-env@1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/grunt-env/-/grunt-env-1.0.1.tgz#3738e862b61fae51184d8aa3c831284a33c2cf38"
   integrity sha512-Hw4iIJ58yYA8kJaP4UUyfw807DUI1FRnow9hhRMnq366bwCnxiBWOgfZsYilcs3Jh1qsGC/i3+G+7/W18hA1TA==
@@ -2960,7 +2955,7 @@ livereload-js@^2.3.0:
   resolved "https://registry.yarnpkg.com/livereload-js/-/livereload-js-2.4.0.tgz#447c31cf1ea9ab52fc20db615c5ddf678f78009c"
   integrity sha512-XPQH8Z2GDP/Hwz2PCDrh2mth4yFejwA1OZ/81Ti3LgKyhDcEjsSsqFWZojHG0va/duGd+WyosY7eXLDoOyqcPw==
 
-load-grunt-tasks@5.x.x:
+load-grunt-tasks@5.1.0:
   version "5.1.0"
   resolved "https://registry.yarnpkg.com/load-grunt-tasks/-/load-grunt-tasks-5.1.0.tgz#14894c27a7e34ebbef9937c39cc35c573cd04c1c"
   integrity sha512-oNj0Jlka1TsfDe+9He0kcA1cRln+TMoTsEByW7ij6kyktNLxBKJtslCFEvFrLC2Dj0S19IWJh3fOCIjLby2Xrg==
