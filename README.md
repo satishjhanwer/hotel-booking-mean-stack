@@ -17,8 +17,27 @@ Using MEAN stack to implement a simple hotel booking application where user can 
 ## Instructions
 
 1. Clone the repo: `git clone https://github.com/satishjhanwer/hotel-booking-mean-stack.git`
-2. Install packages: `yarn install`
-3. Change out the database configuration in `config/database.js`
-4. Launch: `grunt dev`
-5. Launch on Https: `grunt cleaner` then `grunt`
+2. Install yarn and bower `npm i -g yarn bower@1.8.8`
+3. Install packages: `yarn install`
+4. Change the database configuration in `config/database.js`
+5. Launch: `npm run dev`
 6. Visit in your browser at: `http://localhost:3000`
+
+## Database
+
+Once project is up and running, create a user. Go back to your database and update the user collection, set isAdmin to
+true for the user you have created just now. This to make sure we have one admin user which can add hotels into the
+hotels collection.
+
+```json
+{
+	"isAdmin": true, // Set this to true to make the user admin
+	"email": "someuser@someportal.com",
+	"firstName": "FirstName",
+	"lastName": "LastName",
+	"password": "passwordInHashedForm"
+}
+```
+
+After the above step, try to login with Admin user, there you will find screen where you can add hotels data into db.
+From admin screen you can manage all the registered users as well.
