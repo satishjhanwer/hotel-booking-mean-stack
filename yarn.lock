@@ -2984,20 +2984,10 @@ locate-path@^3.0.0:
     p-locate "^3.0.0"
     path-exists "^3.0.0"
 
-lodash@^4.17.10, lodash@^4.17.14, lodash@~4.17.10, lodash@~4.17.11, lodash@~4.17.12, lodash@~4.17.5:
+lodash@4.17.15, lodash@^4.17.10, lodash@^4.17.14, lodash@~0.10.0, lodash@~4.17.10, lodash@~4.17.11, lodash@~4.17.12, lodash@~4.17.5, lodash@~4.3.0:
   version "4.17.15"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.15.tgz#b447f6670a0455bbfeedd11392eff330ea097548"
   integrity sha512-8xOcRHvCjnocdS5cpwXQXVzmmh5e5+saE2QGoeQmbKmRS6J3VQppPOIt0MnmE+4xlZoumy0GPG0D0MVIQbNA1A==
-
-lodash@~0.10.0:
-  version "0.10.0"
-  resolved "https://registry.yarnpkg.com/lodash/-/lodash-0.10.0.tgz#5254bbc2c46c827f535a27d631fd4f2bff374ce7"
-  integrity sha1-UlS7wsRsgn9TWifWMf1PK/83TOc=
-
-lodash@~4.3.0:
-  version "4.3.0"
-  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.3.0.tgz#efd9c4a6ec53f3b05412429915c3e4824e4d25a4"
-  integrity sha1-79nEpuxT87BUEkKZFcPkgk5NJaQ=
 
 logalot@^2.0.0:
   version "2.1.0"
