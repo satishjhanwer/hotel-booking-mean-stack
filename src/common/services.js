@@ -15,24 +15,34 @@
 						this.currentUser = null;
 						this.isAdmin = false;
 						this.isLoggedIn = false;
+						window.user = {};
 					},
 					login: function (email, password) {
-						return $http.post("/login", {
-							email: email,
-							password: password,
-						});
+						return $http
+							.post("/login", {
+								email: email,
+								password: password,
+							})
+							.then(function (response) {
+								return response.data;
+							});
 					},
 					logout: function () {
 						var scope = this;
-						$http.post("/logout").success(function (data) {
-							if (data.success) {
-								scope.resetSession();
-								$location.path("/index");
-							}
-						});
+						$http
+							.post("/logout")
+							.then(function (response) {
+								return response.data;
+							})
+							.then(function (data) {
+								if (data.success) {
+									scope.resetSession();
+									$location.path("/index");
+								}
+							});
 					},
 					isAdminLoggedIn: function () {
-						$http.get("/api/userData/").success(function (data) {
+						$http.get("/api/userData/").then(function (data) {
 							var validateAccess = $q.defer();
 							var isAllowed = data.isAdmin;
 
@@ -45,9 +55,11 @@
 						});
 					},
 					authSuccess: function (userData) {
-						this.currentUser = userData;
-						this.isAdmin = userData.isAdmin;
-						this.isLoggedIn = true;
+						if (Object.keys(userData).length > 0) {
+							this.currentUser = userData;
+							this.isAdmin = userData.isAdmin;
+							this.isLoggedIn = true;
+						}
 					},
 					authFailed: function () {
 						this.resetSession();
@@ -65,10 +77,14 @@
 				return {
 					term: null,
 					get: function () {
-						return $http.get("/api/hotels/");
+						return $http.get("/api/hotels/").then(function (response) {
+							return response.data;
+						});
 					},
 					getHotel: function (id) {
-						return $http.get("/api/hotels/" + id);
+						return $http.get("/api/hotels/" + id).then(function (response) {
+							return response.data;
+						});
 					},
 					create: function (hotelData) {
 						return $http.post("/api/admin/hotels", hotelData);
@@ -77,7 +93,9 @@
 						return $http.delete("/api/admin/hotels/" + id);
 					},
 					search: function (term) {
-						return $http.post("/api/hotels/search", { term: term });
+						return $http.post("/api/hotels/search", { term: term }).then(function (response) {
+							return response.data;
+						});
 					},
 				};
 			},
@@ -88,7 +106,9 @@
 			function ($rootScope, $http) {
 				return {
 					get: function () {
-						return $http.get("/api/bookings");
+						return $http.get("/api/bookings").then(function (response) {
+							return response.data;
+						});
 					},
 					create: function (bookingData) {
 						return $http.post("/api/bookings", bookingData);
@@ -105,7 +125,9 @@
 			function ($rootScope, $http) {
 				return {
 					get: function () {
-						return $http.get("/api/admin/users/");
+						return $http.get("/api/admin/users/").then(function (response) {
+							return response.data;
+						});
 					},
 					create: function (userData) {
 						return $http.post("/signup", userData);

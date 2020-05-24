@@ -60,9 +60,7 @@
 			"SessionService",
 			function ($scope, $window, sessionService) {
 				$scope.session = sessionService;
-				if ($window.user != null) {
-					sessionService.authSuccess($window.user);
-				}
+				sessionService.authSuccess($window.user);
 				$scope.logout = function () {
 					sessionService.logout();
 				};
@@ -75,7 +73,7 @@
 			"growl",
 			function ($scope, $location, sessionService, growl) {
 				$scope.login = function () {
-					sessionService.login(this.email, this.password).success(function (data) {
+					sessionService.login(this.email, this.password).then(function (data) {
 						if (!data.error) {
 							sessionService.authSuccess(data);
 							if (data.isAdmin) {
@@ -101,7 +99,7 @@
 						firstName: this.firstName,
 						lastName: this.lastName,
 					};
-					userService.create(user).success(function (data) {});
+					userService.create(user).then(function (data) {});
 				};
 			},
 		])
@@ -117,10 +115,10 @@
 
 				$scope.init = function () {
 					$scope.newHotel = {};
-					userService.get().success(function (data) {
+					userService.get().then(function (data) {
 						$scope.users = data;
 					});
-					hotelService.get().success(function (data) {
+					hotelService.get().then(function (data) {
 						$scope.hotels = data;
 					});
 				};
@@ -135,11 +133,15 @@
 				};
 
 				$scope.deleteUser = function (id) {
-					userService.delete(id).success(function (data) {});
+					userService.delete(id).then(function () {
+						$scope.init();
+					});
 				};
 
 				$scope.deleteHotel = function (id) {
-					hotelService.delete(id).success(function (data) {});
+					hotelService.delete(id).then(function () {
+						$scope.init();
+					});
 				};
 			},
 		])
@@ -163,10 +165,10 @@
 				};
 
 				$scope.init = function () {
-					bookingService.get().success(function (data) {
+					bookingService.get().then(function (data) {
 						var bookings = data;
 						if (bookings) {
-							hotelService.get().success(function (dataHotels) {
+							hotelService.get().then(function (dataHotels) {
 								for (var i = 0; i < bookings.length; i += 1) {
 									var booking = bookings[i];
 									bookings[i].hotel = $scope.getById(dataHotels, booking.hotel);
@@ -178,7 +180,7 @@
 				};
 
 				$scope.searchHotels = function () {
-					hotelService.search(this.term).success(function (data) {
+					hotelService.search(this.term).then(function (data) {
 						if (data.length > 0) {
 							$scope.hotels = data;
 							hotelService.term = $scope.term;
@@ -187,7 +189,7 @@
 				};
 
 				$scope.cancelBooking = function (id) {
-					bookingService.delete(id).success(function (data) {
+					bookingService.delete(id).then(function (data) {
 						$scope.init();
 					});
 				};
@@ -234,7 +236,7 @@
 				});
 
 				$scope.init = function (hotelId) {
-					hotelService.getHotel(hotelId).success(function (data) {
+					hotelService.getHotel(hotelId).then(function (data) {
 						$scope.hotel = data;
 					});
 				};
@@ -251,7 +253,7 @@
 						creditCardName: $scope.booking.creditCardName,
 						hotel: $scope.hotel,
 					};
-					bookingService.create(newBooking).success(function (data) {});
+					bookingService.create(newBooking).then(function (data) {});
 				};
 
 				$scope.backToSearch = function () {

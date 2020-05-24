@@ -159,7 +159,7 @@ module.exports = function (grunt) {
 		},
 
 		jshint: {
-			files: ["gruntfile.js", "./server/**/*.js", "./src/common/**/*.js", "./src/core/**/*.js"],
+			files: ["gruntfile.js", "./src/core/**/*.js"],
 
 			options: {
 				curly: true,
@@ -173,11 +173,11 @@ module.exports = function (grunt) {
 				boss: true,
 				eqnull: true,
 				globals: {
-					require: false,
+					require: true,
 					__dirname: false,
 					console: false,
-					module: false,
-					exports: false,
+					module: true,
+					exports: true,
 					angular: true,
 					node: true,
 					jQuery: true,
@@ -189,9 +189,6 @@ module.exports = function (grunt) {
 		nodemon: {
 			dev: {
 				script: "./bin/www",
-			},
-			prod: {
-				script: "./bin/www-prod",
 			},
 		},
 
@@ -239,13 +236,7 @@ module.exports = function (grunt) {
 				options: {
 					livereload: true,
 				},
-			} /*,
-            livereload: {
-                options: {
-                    livereload: true
-                },
-                files: []
-            }*/,
+			},
 		},
 	});
 
@@ -265,6 +256,5 @@ module.exports = function (grunt) {
 		"cssmin",
 		"htmlmin",
 		"imagemin",
-		"uglify",
 	]);
 };

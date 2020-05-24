@@ -385,9 +385,18 @@ router.delete("/api/bookings/:id", isLoggedInAjax, function (req, res) {
  * @return {[type]}
  */
 router.get("*", function (req, res) {
+	let user = {};
+	if (req.user) {
+		user = {
+			isAdmin: req.user.isAdmin,
+			email: req.user.email,
+			firstName: req.user.firstName,
+			lastName: req.user.lastName,
+		};
+	}
 	res.render("index", {
 		title: "Hotel Booking System",
-		user: req.user ? req.user : null,
+		user: user,
 	});
 });
 
