@@ -17,7 +17,7 @@ Using MEAN stack to implement a simple hotel booking application where user can 
 ## Instructions
 
 1. Clone the repo: `git clone https://github.com/satishjhanwer/hotel-booking-mean-stack.git`
-2. Install yarn and bower `npm i -g yarn bower@1.8.8`
+2. Install yarn and bower `npm i -g yarn bower`
 3. Install packages: `yarn install`
 4. Change the database configuration in `config/database.js`
 5. Launch: `npm run dev`
