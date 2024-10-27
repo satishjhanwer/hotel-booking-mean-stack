@@ -1,0 +1,11 @@
+<nav class="bg-blue-600 p-4 fixed w-full">
+  <div class="container mx-auto flex justify-between items-center">
+    <a href="/" class="text-white text-lg font-bold">YourAppName</a>
+    <div>
+      <a routerLink="/" class="text-white px-4">Home</a>
+      <a *ngIf="!isLoggedIn" routerLink="/login" class="text-white px-4">Login</a>
+      <a *ngIf="!isLoggedIn" routerLink="/register" class="text-white px-4">Register</a>
+      <a *ngIf="isLoggedIn" (click)="logout()" class="text-white px-4 cursor-pointer">Logout</a>
+    </div>
+  </div>
+</nav>

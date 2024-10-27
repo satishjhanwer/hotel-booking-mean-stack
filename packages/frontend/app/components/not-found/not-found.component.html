@@ -1,0 +1,15 @@
+<div class="flex flex-col items-center justify-center h-screen text-center bg-gray-100">
+  <h1 class="text-6xl font-bold text-red-500">404</h1>
+  <h2 class="text-2xl mt-4">Oops! Page Not Found</h2>
+  <p class="mt-2 text-gray-600">The page you're looking for doesn't exist.</p>
+  <div class="mt-6">
+    <button (click)="navigateHome()" *ngIf="!isLoggedIn"
+      class="px-4 py-2 text-white bg-blue-600 hover:bg-blue-700 rounded">
+      Go to Home
+    </button>
+    <button *ngIf="isLoggedIn" (click)="navigateProfile()"
+      class="ml-4 px-4 py-2 text-white bg-green-600 hover:bg-green-700 rounded">
+      Go to Profile
+    </button>
+  </div>
+</div>

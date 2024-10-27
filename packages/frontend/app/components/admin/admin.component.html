@@ -1,0 +1,147 @@
+<div class="flex flex-col items-center justify-center h-screen bg-gray-100 p-4">
+  <!-- Add New Hotel Form -->
+  <div *ngIf="addHotel" class="p-4 bg-white shadow-md rounded w-full">
+    <h2 class="text-xl font-bold mb-4">Add New Hotel</h2>
+    <form [formGroup]="hotelForm" (ngSubmit)="createHotel()">
+      <div class="mb-4">
+        <label class="block text-sm font-bold mb-1">Hotel Name</label>
+        <input formControlName="name" type="text" placeholder="Hotel Name"
+          class="border border-gray-300 p-2 w-full rounded" />
+        <div *ngIf="hotelForm.get('name')?.invalid && hotelForm.get('name')?.touched" class="text-red-500 text-xs mt-1">
+          Hotel name is required.
+        </div>
+      </div>
+
+      <div class="mb-4">
+        <label class="block text-sm font-bold mb-1">Hotel Address</label>
+        <input formControlName="address" type="text" placeholder="Hotel Address"
+          class="border border-gray-300 p-2 w-full rounded" />
+        <div *ngIf="hotelForm.get('address')?.invalid && hotelForm.get('address')?.touched"
+          class="text-red-500 text-xs mt-1">
+          Hotel address is required.
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label class="block text-sm font-bold mb-1">Zip Code</label>
+          <input formControlName="zip" type="text" placeholder="Zip Code"
+            class="border border-gray-300 p-2 w-full rounded" />
+          <div *ngIf="hotelForm.get('zip')?.invalid && hotelForm.get('zip')?.touched" class="text-red-500 text-xs mt-1">
+            Zip code is required and must be numbers only.
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-sm font-bold mb-1">City</label>
+          <input formControlName="city" type="text" placeholder="City"
+            class="border border-gray-300 p-2 w-full rounded" />
+          <div *ngIf="hotelForm.get('city')?.invalid && hotelForm.get('city')?.touched"
+            class="text-red-500 text-xs mt-1">
+            City is required.
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-sm font-bold mb-1">State</label>
+          <input formControlName="state" type="text" placeholder="State"
+            class="border border-gray-300 p-2 w-full rounded" />
+          <div *ngIf="hotelForm.get('state')?.invalid && hotelForm.get('state')?.touched"
+            class="text-red-500 text-xs mt-1">
+            State is required.
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-sm font-bold mb-1">Room Rate</label>
+          <input formControlName="rate" type="text" placeholder="Room Rate"
+            class="border border-gray-300 p-2 w-full rounded" />
+          <div *ngIf="hotelForm.get('rate')?.invalid && hotelForm.get('rate')?.touched"
+            class="text-red-500 text-xs mt-1">
+            Room rate is required and must be numbers only.
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-sm font-bold mb-1">Room Count</label>
+          <input formControlName="roomCount" type="text" placeholder="Room Count"
+            class="border border-gray-300 p-2 w-full rounded" />
+          <div *ngIf="hotelForm.get('roomCount')?.invalid && hotelForm.get('roomCount')?.touched"
+            class="text-red-500 text-xs mt-1">
+            Room count is required and must be numbers only.
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-4 flex justify-between">
+        <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Proceed</button>
+        <button type="button" (click)="addHotel = false"
+          class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">Cancel</button>
+      </div>
+    </form>
+    <br />
+  </div>
+  <!-- List of Hotels -->
+  <div *ngIf="!addHotel" class="p-4 bg-white shadow-md rounded w-full">
+    <div class="bg-gray-800 text-white p-4 font-bold flex flex-row items-center justify-between">
+      <h2 class="text-xl font-bold">Current Hotels</h2>
+      <button (click)="addHotel = true" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Add New
+        Hotel</button>
+    </div>
+    <div class="p-4">
+      <div class="table-responsive">
+        <table class="min-w-full table-auto border-collapse">
+          <thead>
+            <tr class="bg-gray-100">
+              <th class="border px-4 py-2">Name</th>
+              <th class="border px-4 py-2">Address</th>
+              <th class="border px-4 py-2">City, State</th>
+              <th class="border px-4 py-2">Zip</th>
+              <th class="border px-4 py-2">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let hotel of hotels">
+              <td class="border px-4 py-2">{{ hotel.name }}</td>
+              <td class="border px-4 py-2">{{ hotel.address }}</td>
+              <td class="border px-4 py-2">{{ hotel.city }} - {{ hotel.state }}</td>
+              <td class="border px-4 py-2">{{ hotel.zip }}</td>
+              <td class="border px-4 py-2"><a href="#" (click)="deleteHotel(hotel._id)"
+                  class="text-red-500 hover:underline">Delete</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <br />
+  <!-- List of Users -->
+  <div class="p-4 bg-white shadow-md rounded w-full">
+    <div class="bg-gray-800 text-white p-4 font-bold flex flex-row items-center justify-between">
+      <h2 class="text-xl font-bold">Current Users</h2>
+    </div>
+    <div class="p-4">
+      <div class="table-responsive">
+        <table class="min-w-full table-auto border-collapse">
+          <thead>
+            <tr class="bg-gray-100">
+              <th class="border px-4 py-2">Full Name</th>
+              <th class="border px-4 py-2">Email Address</th>
+              <th class="border px-4 py-2">Is Admin</th>
+              <th class="border px-4 py-2">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let user of users">
+              <td class="border px-4 py-2">{{ user.firstName }} {{ user.lastName }}</td>
+              <td class="border px-4 py-2">{{ user.email }}</td>
+              <td class="border px-4 py-2">{{ user.isAdmin ? 'Yes' : 'No' }}</td>
+              <td class="border px-4 py-2"><a href="#" (click)="deleteUser(user._id)"
+                  class="text-red-500 hover:underline">Delete</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,79 @@
+<div class="flex flex-col items-center justify-center h-screen bg-gray-100 p-4">
+  <div class="bg-white shadow-md rounded p-4 w-full">
+    <div class="flex justify-between items-center">
+      <div class="w-1/4">
+        <input [formControl]="term" type="text" placeholder="Search Hotel"
+          class="input-sm w-full border-gray-300 rounded p-2" />
+      </div>
+      <div class="w-1/6">
+        <button class="btn bg-blue-600 text-white w-full py-2 rounded hover:bg-blue-700" (click)="searchHotels()">
+          Search
+        </button>
+      </div>
+    </div>
+  </div>
+  <br />
+  <div class="bg-white shadow-md rounded p-4 w-full">
+    <div class="bg-gray-800 text-white p-4 font-bold">Search Hotels</div>
+    <div class="p-4">
+      <div class="table-responsive">
+        <table class="min-w-full table-auto border-collapse">
+          <thead>
+            <tr class="bg-gray-100">
+              <th class="border px-4 py-2">Name</th>
+              <th class="border px-4 py-2">Address</th>
+              <th class="border px-4 py-2">City, State</th>
+              <th class="border px-4 py-2">Zip</th>
+              <th class="border px-4 py-2">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let hotel of hotels">
+              <td class="border px-4 py-2">{{ hotel.name }}</td>
+              <td class="border px-4 py-2">{{ hotel.address }}</td>
+              <td class="border px-4 py-2">{{ hotel.city }} - {{ hotel.state }}</td>
+              <td class="border px-4 py-2">{{ hotel.zip }}</td>
+              <td class="border px-4 py-2">
+                <a [routerLink]="['/view-hotel', hotel._id]" class="text-blue-500 hover:underline">View Hotel</a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <br />
+  <div class="bg-white shadow-md rounded p-4 w-full">
+    <div class="bg-gray-800 text-white p-4 font-bold">Current Booked Hotels</div>
+    <div class="p-4">
+      <div class="table-responsive">
+        <table class="min-w-full table-auto border-collapse">
+          <thead>
+            <tr class="bg-gray-100">
+              <th class="border px-4 py-2">Name</th>
+              <th class="border px-4 py-2">Address</th>
+              <th class="border px-4 py-2">City, State</th>
+              <th class="border px-4 py-2">Check-In Date</th>
+              <th class="border px-4 py-2">Check-Out Date</th>
+              <th class="border px-4 py-2">Confirmation Number</th>
+              <th class="border px-4 py-2">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let booking of bookings">
+              <td class="border px-4 py-2">{{ booking.hotel.name }}</td>
+              <td class="border px-4 py-2">{{ booking.hotel.address }}</td>
+              <td class="border px-4 py-2">{{ booking.hotel.city }} - {{ booking.hotel.state }}</td>
+              <td class="border px-4 py-2">{{ booking.checkInDate | date }}</td>
+              <td class="border px-4 py-2">{{ booking.checkOutDate | date }}</td>
+              <td class="border px-4 py-2">{{ booking._id }}</td>
+              <td class="border px-4 py-2">
+                <a href="#" (click)="cancelBooking(booking._id)" class="text-red-500 hover:underline">Cancel Booking</a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,22 @@
+<!-- src/app/home/home.component.html -->
+<div class="flex flex-col items-center justify-center h-screen bg-gray-100">
+  <section class="bg-white">
+    <div class="grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12">
+      <div class="mr-auto place-self-center lg:col-span-7">
+        <h1 class="text-4xl font-bold mb-4">Welcome to Your App</h1>
+        <p class="mb-8">Your app description goes here. Explore the features and enjoy!</p>
+        <div>
+          <a *ngIf="!isLoggedIn" routerLink="/login"
+            class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Sign In</a>
+          <a *ngIf="!isLoggedIn" routerLink="/register"
+            class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 ml-4">Register</a>
+          <a *ngIf="isLoggedIn" routerLink="/profile"
+            class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 ml-4">Profile</a>
+        </div>
+      </div>
+      <div class="hidden lg:mt-0 lg:col-span-5 lg:flex">
+        <img src="../assets/winter_hotel.jpg" alt="mockup">
+      </div>
+    </div>
+  </section>
+</div>

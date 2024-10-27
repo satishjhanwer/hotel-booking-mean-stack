@@ -1,0 +1,203 @@
+<div class="flex flex-col items-center justify-center h-screen bg-gray-100 p-4">
+  <div class="p-4" *ngIf="!hotelBooking">
+    <div class="bg-white rounded-lg shadow-lg p-6">
+      <h2 class="text-2xl font-semibold mb-4">View Hotel: {{ hotel?.name }}</h2>
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <strong>Name:</strong> {{ hotel?.name }}
+        </div>
+        <div>
+          <strong>Address:</strong> {{ hotel?.address }}
+        </div>
+        <div>
+          <strong>City:</strong> {{ hotel?.city }}
+        </div>
+        <div>
+          <strong>State:</strong> {{ hotel?.state }}
+        </div>
+        <div>
+          <strong>Zip:</strong> {{ hotel?.zip }}
+        </div>
+        <div>
+          <strong>Nightly Rate:</strong> {{ hotel?.rate | currency }}
+        </div>
+      </div>
+      <div class="mt-6 text-center">
+        <button class="btn btn-primary mr-2" (click)="hotelBooking = true">
+          Book Now
+        </button>
+        <button class="btn btn-secondary" (click)="backToSearch()">
+          Back To Search
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Booking Form -->
+  <div class="p-4" *ngIf="hotelBooking && !confirmBooking">
+    <div class="bg-white rounded-lg shadow-lg p-6">
+      <h2 class="text-2xl font-semibold mb-4">Book Hotel: {{ hotel?.name }}</h2>
+      <form [formGroup]="paymentForm" (ngSubmit)="proceed()" novalidate>
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <strong>Name:</strong> {{ hotel?.name }}
+          </div>
+          <div>
+            <strong>Address:</strong> {{ hotel?.address }}
+          </div>
+          <div>
+            <strong>City:</strong> {{ hotel?.city }}
+          </div>
+          <div>
+            <strong>State:</strong> {{ hotel?.state }}
+          </div>
+          <div>
+            <strong>Zip:</strong> {{ hotel?.zip }}
+          </div>
+          <div>
+            <strong>Nightly Rate:</strong> {{ hotel?.rate | currency }}
+          </div>
+          <!-- Check-In Date -->
+          <div class="mb-4">
+            <label for="checkInDate" class="block text-sm font-bold mb-2">Check In Date</label>
+            <input type="date" formControlName="checkInDate" class="border border-gray-300 p-2 w-full rounded"
+              required />
+            <div
+              *ngIf="paymentForm.get('checkInDate')?.invalid && (paymentForm.get('checkInDate')?.touched || paymentForm.get('checkInDate')?.dirty)"
+              class="mt-2">
+              <small *ngIf="paymentForm.get('checkInDate')?.errors?.['required']"
+                class="text-red-500 font-semibold">Check-in date is required.</small>
+            </div>
+          </div>
+          <!-- Check-Out Date -->
+          <div class="mb-4">
+            <label for="checkOutDate" class="block text-sm font-bold mb-2">Check Out Date</label>
+            <input type="date" formControlName="checkOutDate" class="border border-gray-300 p-2 w-full rounded"
+              required />
+            <div
+              *ngIf="paymentForm.get('checkOutDate')?.invalid && (paymentForm.get('checkOutDate')?.touched || paymentForm.get('checkOutDate')?.dirty)"
+              class="mt-2">
+              <small *ngIf="paymentForm.get('checkOutDate')?.errors?.['required']"
+                class="text-red-500 font-semibold">Check-out date
+                is required.</small>
+            </div>
+          </div>
+          <!-- Room Type -->
+          <div class="mb-4">
+            <label for="roomType" class="block text-sm font-bold mb-2">Room Preference</label>
+            <select formControlName="roomType" class="form-select" required>
+              <option value="">- - Make Selection - -</option>
+              <option *ngFor="let option of options" [ngValue]="option">
+                {{ option.name }} - {{ option.type }}
+              </option>
+            </select>
+            <div
+              *ngIf="paymentForm.get('roomType')?.invalid && (paymentForm.get('roomType')?.touched || paymentForm.get('roomType')?.dirty)"
+              class="mt-2">
+              <small *ngIf="paymentForm.get('roomType')?.errors?.['required']" class="text-red-500 font-semibold">Room
+                preference is required.</small>
+            </div>
+          </div>
+          <!-- Credit Card Info -->
+          <div class="mb-4">
+            <label for="creditCardName" class="block text-sm font-bold mb-2">Credit Card #</label>
+            <input type="text" formControlName="creditCardName" class="border border-gray-300 p-2 w-full rounded"
+              required />
+            <div
+              *ngIf="paymentForm.get('creditCardName')?.invalid && (paymentForm.get('creditCardName')?.touched || paymentForm.get('creditCardName')?.dirty)"
+              class="mt-2">
+              <small *ngIf="paymentForm.get('creditCardName')?.errors?.['required']"
+                class="text-red-500 font-semibold">Credit Card Name is required</small>
+            </div>
+          </div>
+          <div class="mb-4">
+            <label for="creditCard" class="block text-sm font-bold mb-2">Credit Card #</label>
+            <input type="text" formControlName="creditCard" class="border border-gray-300 p-2 w-full rounded"
+              required />
+            <div
+              *ngIf="paymentForm.get('creditCard')?.invalid && (paymentForm.get('creditCard')?.touched || paymentForm.get('creditCard')?.dirty)"
+              class="mt-2">
+              <small *ngIf="paymentForm.get('creditCard')?.errors?.['required']"
+                class="text-red-500 font-semibold">Credit card must be 15-19 digits.</small>
+            </div>
+          </div>
+          <!-- CVV -->
+          <div class="mb-4">
+            <label for="securityCode" class="block text-sm font-bold mb-2">CVV</label>
+            <input type="password" formControlName="securityCode" class="border border-gray-300 p-2 w-full rounded"
+              required />
+            <div
+              *ngIf="paymentForm.get('securityCode')?.invalid && (paymentForm.get('securityCode')?.touched || paymentForm.get('securityCode')?.dirty)"
+              class="mt-2">
+              <small *ngIf="paymentForm.get('securityCode')?.errors?.['required']"
+                class="text-red-500 font-semibold">CVV must be 3-4 digits.</small>
+            </div>
+          </div>
+          <!-- Expiry Date -->
+          <div class="mb-4">
+            <label for="expiryMonth" class="block text-sm font-bold mb-2">Expiry Date</label>
+            <select formControlName="expiryMonth" class="form-select" required>
+              <option value="">Month</option>
+              <option *ngFor="let month of months" [ngValue]="month">
+                {{ month }}
+              </option>
+            </select>
+            <select formControlName="expiryYear" class="form-select" required>
+              <option value="">Year</option>
+              <option *ngFor="let year of years" [ngValue]="year">
+                {{ year }}
+              </option>
+            </select>
+            <div
+              *ngIf="paymentForm.get('expiryMonth')?.invalid && (paymentForm.get('expiryMonth')?.touched || paymentForm.get('expiryMonth')?.dirty)"
+              class="mt-2">
+              <small *ngIf="paymentForm.get('expiryMonth')?.errors?.['required']"
+                class="text-red-500 font-semibold">Expiration Month is required.</small>
+            </div>
+            <div
+              *ngIf="paymentForm.get('expiryYear')?.invalid && (paymentForm.get('expiryYear')?.touched || paymentForm.get('expiryYear')?.dirty)"
+              class="mt-2">
+              <small *ngIf="paymentForm.get('expiryYear')?.errors?.['required']"
+                class="text-red-500 font-semibold">Expiration Year is required.</small>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-center mt-6">
+          <button type="submit" class="btn btn-primary mr-2" [disabled]="paymentForm.invalid">
+            Proceed
+          </button>
+          <button type="button" class="btn btn-secondary" (click)="backToSearch()">
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Confirmation -->
+  <div class="p-4" *ngIf="confirmBooking">
+    <div class="bg-white rounded-lg shadow-lg p-6">
+      <h2 class="text-2xl font-semibold mb-4">Confirm Booking: {{ hotel?.name }}</h2>
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <strong>Check In Date:</strong> {{ booking?.checkInDate }}
+        </div>
+        <div>
+          <strong>Check Out Date:</strong> {{ booking?.checkOutDate }}
+        </div>
+        <div>
+          <strong>Total Payment:</strong> {{ hotel?.rate | currency }}
+        </div>
+        <div>
+          <strong>Credit Card:</strong> **** **** **** {{ booking?.creditCard?.slice(-4) }}
+        </div>
+      </div>
+      <div class="mt-6 text-center">
+        <button class="btn btn-primary mr-2" (click)="bookHotel()">Confirm</button>
+        <button class="btn btn-secondary mr-2" (click)="confirmBooking = false">Revise</button>
+        <button class="btn btn-secondary" (click)="backToSearch()">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
