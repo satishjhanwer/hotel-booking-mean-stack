@@ -1,4 +1,4 @@
-# hotel-booking-mean-stack
+# Hotel Booking Mean Stack
 
 ========================
 
@@ -6,22 +6,21 @@ Using MEAN stack to implement a simple hotel booking application where user can 
 
 ## MEAN Stack
 
-1. MongoDB: use mongo as the persistent data store
+1. MongoDB: use MongoDB to store data
 
-2. Express.js: use express as the web server to handle routing the calls
+2. Express.js: use Express Server to handle all the back-end business logic
 
-3. Angular.js: use angular framework as the front-end template engine
+3. Angular 18: use Angular 18 to build the front-end
 
-4. Node.js: use node to handle all the back-end business logic and database access
+4. Node JS 22: use Node JS 22 to run the server
 
 ## Instructions
 
 1. Clone the repo: `git clone https://github.com/satishjhanwer/hotel-booking-mean-stack.git`
-2. Install yarn and bower `npm i -g yarn bower`
-3. Install packages: `yarn install`
-4. Change the database configuration in `config/database.js`
-5. Launch: `npm run dev`
-6. Visit in your browser at: `http://localhost:3000`
+2. Install packages: `yarn install`
+3. Change the database configuration in `packages/backend/.env`
+4. At the root of the repo run this command: `yarn start` (This will spinoff both frontend and backend at respective
+   ports)
 
 ## Database
 
@@ -31,11 +30,11 @@ hotels collection.
 
 ```javascript
 {
-	"isAdmin": true, // Set this to true to make the user admin
-	"email": "someuser@someportal.com",
-	"firstName": "FirstName",
-	"lastName": "LastName",
-	"password": "passwordInHashedForm"
+ "isAdmin": true, // Set this to true to make the user admin
+ "email": "someuser@someportal.com",
+ "firstName": "FirstName",
+ "lastName": "LastName",
+ "password": "passwordInHashedForm"
 }
 ```
 
