@@ -1,0 +1,35 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "start": "yarn dev",
+    "dev": "tsx app.ts"
+  },
+  "keywords": [
+    "Typescript",
+    "Node 22",
+    "Mongodb 8",
+    "Express"
+  ],
+  "author": "Satish Jhanwer",
+  "license": "MIT",
+  "description": "HOTEL Booking Application backend code written in typescript",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1",
+    "joi": "^17.13.3",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.7.2",
+    "rate-limiter-flexible": "^5.0.3"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "@types/jsonwebtoken": "^9.0.7",
+    "tsx": "^4.19.1"
+  }
+}

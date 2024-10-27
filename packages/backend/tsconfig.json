@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "outDir": "../../dist/backend",
+    "rootDir": ".",
+    "moduleResolution": "node"
+  },
+  "include": ["./*.ts", "@types/**/*.d.ts"],
+  "exclude": ["node_modules"]
+}
