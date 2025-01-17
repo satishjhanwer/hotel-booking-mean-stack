@@ -24,7 +24,7 @@
     "express": "^4.21.1",
     "joi": "^17.13.3",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.8.3",
+    "mongoose": "^8.9.5",
     "rate-limiter-flexible": "^5.0.4"
   },
   "devDependencies": {
