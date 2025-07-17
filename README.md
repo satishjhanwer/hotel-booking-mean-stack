@@ -10,7 +10,7 @@ Using MEAN stack to implement a simple hotel booking application where user can 
 
 2. Express.js: use Express Server to handle all the back-end business logic
 
-3. Angular 18: use Angular 18 to build the front-end
+3. Angular 20: use Angular 20 to build the front-end
 
 4. Node JS 22: use Node JS 22 to run the server
 
