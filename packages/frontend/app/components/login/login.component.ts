@@ -7,11 +7,10 @@ import { SnackbarService } from "../../services/snackbar.service";
 import { SessionService } from "../../services/session.service";
 
 @Component({
-  standalone: true,
-  selector: "app-login",
-  styleUrl: "./login.component.scss",
-  templateUrl: "./login.component.html",
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule],
+    selector: "app-login",
+    styleUrl: "./login.component.scss",
+    templateUrl: "./login.component.html",
+    imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule]
 })
 export class LoginComponent {
   loginForm: FormGroup;

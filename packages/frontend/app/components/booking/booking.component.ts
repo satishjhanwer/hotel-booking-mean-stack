@@ -6,11 +6,10 @@ import { HotelService } from "../../services/hotel.service";
 import { BookingService } from "../../services/booking.service";
 
 @Component({
-  standalone: true,
-  selector: "app-booking",
-  styleUrl: "./booking.component.scss",
-  templateUrl: "./booking.component.html",
-  imports: [FormsModule, ReactiveFormsModule, CommonModule, RouterModule],
+    selector: "app-booking",
+    styleUrl: "./booking.component.scss",
+    templateUrl: "./booking.component.html",
+    imports: [FormsModule, ReactiveFormsModule, CommonModule, RouterModule]
 })
 export class BookingComponent implements OnInit {
   hotel: any;

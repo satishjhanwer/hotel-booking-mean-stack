@@ -5,11 +5,10 @@ import { NavigationComponent } from "./components/navigation/navigation.componen
 import { FooterComponent } from "./components/footer/footer.component";
 
 @Component({
-  standalone: true,
-  selector: "app-root",
-  styleUrl: "./app.component.scss",
-  templateUrl: "./app.component.html",
-  imports: [RouterOutlet, CommonModule, NavigationComponent, FooterComponent],
+    selector: "app-root",
+    styleUrl: "./app.component.scss",
+    templateUrl: "./app.component.html",
+    imports: [RouterOutlet, CommonModule, NavigationComponent, FooterComponent]
 })
 export class AppComponent {
   constructor() {}

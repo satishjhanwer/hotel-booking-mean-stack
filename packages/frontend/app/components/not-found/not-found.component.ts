@@ -4,11 +4,10 @@ import { Router } from "@angular/router";
 import { SessionService } from "../../services/session.service";
 
 @Component({
-  standalone: true,
-  imports: [CommonModule],
-  selector: "app-not-found",
-  styleUrl: "./not-found.component.scss",
-  templateUrl: "./not-found.component.html",
+    imports: [CommonModule],
+    selector: "app-not-found",
+    styleUrl: "./not-found.component.scss",
+    templateUrl: "./not-found.component.html"
 })
 export class NotFoundComponent {
   isLoggedIn = false;

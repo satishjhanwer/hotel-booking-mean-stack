@@ -7,12 +7,11 @@ import { AuthService } from "../../services/auth.service";
 import { SnackbarService } from "../../services/snackbar.service";
 
 @Component({
-  selector: "app-navigation",
-  standalone: true,
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [CommonModule, FormsModule, RouterModule],
-  templateUrl: "./navigation.component.html",
-  styleUrl: "./navigation.component.scss",
+    selector: "app-navigation",
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    imports: [CommonModule, FormsModule, RouterModule],
+    templateUrl: "./navigation.component.html",
+    styleUrl: "./navigation.component.scss"
 })
 export class NavigationComponent implements OnInit {
   isLoggedIn = false;

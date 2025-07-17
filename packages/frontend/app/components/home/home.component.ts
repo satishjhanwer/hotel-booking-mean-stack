@@ -4,11 +4,10 @@ import { SessionService } from "../../services/session.service";
 import { CommonModule } from "@angular/common";
 
 @Component({
-  standalone: true,
-  selector: "app-home",
-  styleUrl: "./home.component.scss",
-  templateUrl: "./home.component.html",
-  imports: [RouterModule, CommonModule],
+    selector: "app-home",
+    styleUrl: "./home.component.scss",
+    templateUrl: "./home.component.html",
+    imports: [RouterModule, CommonModule]
 })
 export class HomeComponent implements OnInit {
   isLoggedIn = false;

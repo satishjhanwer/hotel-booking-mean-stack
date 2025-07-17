@@ -5,11 +5,10 @@ import { HotelService } from "../../services/hotel.service";
 import { CommonModule } from "@angular/common";
 
 @Component({
-  standalone: true,
-  selector: "app-admin",
-  styleUrl: "./admin.component.scss",
-  templateUrl: "./admin.component.html",
-  imports: [FormsModule, ReactiveFormsModule, CommonModule],
+    selector: "app-admin",
+    styleUrl: "./admin.component.scss",
+    templateUrl: "./admin.component.html",
+    imports: [FormsModule, ReactiveFormsModule, CommonModule]
 })
 export class AdminComponent implements OnInit {
   addHotel = false;

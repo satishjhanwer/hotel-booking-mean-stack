@@ -6,11 +6,10 @@ import { BookingService } from "../../services/booking.service";
 import { RouterModule } from "@angular/router";
 
 @Component({
-  standalone: true,
-  selector: "app-profile",
-  styleUrl: "./profile.component.scss",
-  templateUrl: "./profile.component.html",
-  imports: [FormsModule, ReactiveFormsModule, CommonModule, RouterModule],
+    selector: "app-profile",
+    styleUrl: "./profile.component.scss",
+    templateUrl: "./profile.component.html",
+    imports: [FormsModule, ReactiveFormsModule, CommonModule, RouterModule]
 })
 export class ProfileComponent implements OnInit {
   term = new FormControl("");

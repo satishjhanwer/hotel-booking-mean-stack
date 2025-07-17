@@ -6,11 +6,10 @@ import { AuthService } from "../../services/auth.service";
 import { SnackbarService } from "../../services/snackbar.service";
 
 @Component({
-  standalone: true,
-  selector: "app-register",
-  styleUrl: "./register.component.scss",
-  templateUrl: "./register.component.html",
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule],
+    selector: "app-register",
+    styleUrl: "./register.component.scss",
+    templateUrl: "./register.component.html",
+    imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule]
 })
 export class RegisterComponent {
   registerForm: FormGroup;
