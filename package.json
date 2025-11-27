@@ -10,7 +10,7 @@
   "keywords": [
     "Node 22",
     "Mongodb 8",
-    "Angular 20",
+    "Angular 21",
     "Express"
   ],
   "author": "Satish Jhanwer",
@@ -28,7 +28,7 @@
   },
   "homepage": "https://github.com/satishjhanwer/hotel-booking-mean-stack",
   "devDependencies": {
-    "concurrently": "^9.2.0"
+    "concurrently": "^9.2.1"
   },
   "resolutions": {
     "http-proxy-middleware": "^3.0.3"
