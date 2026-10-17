@@ -1,7 +1,7 @@
 {
   "name": "hotel-booking-mean-stack",
   "version": "1.0.0",
-  "description": "Using MEAN stack to implement a simple hotel booking application where user can search hotels in database and book them.",
+  "description": "Full-stack hotel booking application built with MongoDB, Express, Angular, and Node.js.",
   "scripts": {
     "start": "concurrently \"npm run start:backend\" \"npm run start:frontend\"",
     "start:backend": "cd packages/backend && yarn start",
@@ -9,10 +9,13 @@
     "seed": "yarn workspace backend seed"
   },
   "keywords": [
-    "Node 22",
-    "Mongodb 8",
-    "Angular 21",
-    "Express"
+    "MongoDB 8",
+    "Express 5",
+    "Mongoose 9",
+    "Angular 22",
+    "Tailwind CSS 4",
+    "TypeScript 6",
+    "Node.js"
   ],
   "author": "Satish Jhanwer",
   "license": "MIT",
@@ -35,5 +38,8 @@
     "http-proxy-middleware": "^3.0.3",
     "@jridgewell/sourcemap-codec": "1.6.0"
   },
-  "packageManager": "yarn@1.22.22+sha1.ac34549e6aa8e7ead463a7407e1c7390f61a6610"
+  "packageManager": "yarn@4.18.1",
+  "engines": {
+    "node": "^22.22.3 || ^24.15.0 || >=26.0.0"
+  }
 }
