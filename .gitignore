@@ -1,4 +1,6 @@
-node_modules
 .history
 .angular
+.yarn
+
+node_modules
 dist
