@@ -33,7 +33,7 @@ router.delete("/hotels/:id", authMiddleware, adminMiddleware, async (req: Reques
 
 router.get("/users", authMiddleware, adminMiddleware, async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const users = await User.find();
+    const users = await User.find().select("-password");
     res.json(users);
   } catch (error) {
     next(error);

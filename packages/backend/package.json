@@ -5,7 +5,8 @@
   "scripts": {
     "build": "tsc",
     "start": "yarn dev",
-    "dev": "tsx app.ts"
+    "dev": "tsx app.ts",
+    "seed": "tsx seed.ts"
   },
   "keywords": [
     "Typescript",

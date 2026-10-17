@@ -56,6 +56,7 @@ userSchema.methods.generateJWT = function (): string {
     {
       id: this._id,
       email: this.email,
+      isAdmin: this.isAdmin,
       exp: Math.floor(exp.getTime() / 1000),
     },
     process.env.JWT_SECRET || "your_jwt_secret"

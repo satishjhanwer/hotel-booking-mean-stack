@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from "@angular/forms";
 import { UserService } from "../../services/user.service";
 import { HotelService } from "../../services/hotel.service";
@@ -14,9 +14,16 @@ export class AdminComponent implements OnInit {
   addHotel = false;
   users: any[] = [];
   hotels: any[] = [];
+  hotelsError = "";
+  usersError = "";
   hotelForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private hotelService: HotelService, private userService: UserService) {
+  constructor(
+    private fb: FormBuilder,
+    private hotelService: HotelService,
+    private userService: UserService,
+    private cdr: ChangeDetectorRef,
+  ) {
     this.hotelForm = this.fb.group({
       name: ["", Validators.required],
       city: ["", Validators.required],
@@ -34,11 +41,33 @@ export class AdminComponent implements OnInit {
   }
 
   getHotels(): void {
-    this.hotelService.getHotels().subscribe(hotels => (this.hotels = hotels));
+    this.hotelsError = "";
+    this.hotelService.getHotels().subscribe({
+      next: hotels => {
+        this.hotels = Array.isArray(hotels) ? hotels : [];
+        this.cdr.detectChanges();
+      },
+      error: error => {
+        this.hotels = [];
+        this.hotelsError = error.error?.message ?? "Could not load hotels. Check that the backend is running.";
+        this.cdr.detectChanges();
+      },
+    });
   }
 
   getUsers(): void {
-    this.userService.getAllUsers().subscribe(users => (this.users = users));
+    this.usersError = "";
+    this.userService.getAllUsers().subscribe({
+      next: users => {
+        this.users = Array.isArray(users) ? users : [];
+        this.cdr.detectChanges();
+      },
+      error: error => {
+        this.users = [];
+        this.usersError = error.error?.message ?? "Could not load users. Check your admin access.";
+        this.cdr.detectChanges();
+      },
+    });
   }
 
   createHotel(): void {

@@ -1,4 +1,4 @@
-<div class="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
+<div class="flex min-h-screen flex-col items-center justify-start gap-6 bg-gray-100 px-4 pb-10 pt-24">
   <!-- Add New Hotel Form -->
   <div *ngIf="addHotel" class="p-4 bg-white shadow-md rounded w-full">
     <h2 class="text-xl font-bold mb-4">Add New Hotel</h2>
@@ -101,6 +101,12 @@
             </tr>
           </thead>
           <tbody>
+            <tr *ngIf="hotelsError">
+              <td colspan="5" class="px-4 py-3 text-center text-red-600">{{ hotelsError }}</td>
+            </tr>
+            <tr *ngIf="!hotelsError && hotels.length === 0">
+              <td colspan="5" class="px-4 py-3 text-center text-gray-500">No hotels found. Run <code>yarn seed</code> from the repository root to add sample data.</td>
+            </tr>
             <tr *ngFor="let hotel of hotels">
               <td class="border px-4 py-2">{{ hotel.name }}</td>
               <td class="border px-4 py-2">{{ hotel.address }}</td>
@@ -114,7 +120,6 @@
       </div>
     </div>
   </div>
-  <br />
   <!-- List of Users -->
   <div class="p-4 bg-white shadow-md rounded w-full">
     <div class="bg-gray-800 text-white p-4 font-bold flex flex-row items-center justify-between">
@@ -132,6 +137,12 @@
             </tr>
           </thead>
           <tbody>
+            <tr *ngIf="usersError">
+              <td colspan="4" class="px-4 py-3 text-center text-red-600">{{ usersError }}</td>
+            </tr>
+            <tr *ngIf="!usersError && users.length === 0">
+              <td colspan="4" class="px-4 py-3 text-center text-gray-500">No users found.</td>
+            </tr>
             <tr *ngFor="let user of users">
               <td class="border px-4 py-2">{{ user.firstName }} {{ user.lastName }}</td>
               <td class="border px-4 py-2">{{ user.email }}</td>

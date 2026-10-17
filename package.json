@@ -5,7 +5,8 @@
   "scripts": {
     "start": "concurrently \"npm run start:backend\" \"npm run start:frontend\"",
     "start:backend": "cd packages/backend && node src/app.js",
-    "start:frontend": "cd packages/frontend && live-server"
+    "start:frontend": "cd packages/frontend && live-server",
+    "seed": "yarn workspace backend seed"
   },
   "keywords": [
     "Node 22",
