@@ -1,8 +1,8 @@
-<div class="flex flex-col items-center justify-center h-screen bg-gray-100">
+<div class="flex min-h-screen flex-col items-center justify-start bg-gray-100 px-4 pb-10 pt-24">
   <h2 class="text-3xl font-bold mb-6">Register</h2>
-  <form [formGroup]="registerForm" (ngSubmit)="register()" class="bg-white shadow-md rounded px-8 py-6 w-96">
+  <form [formGroup]="registerForm" (ngSubmit)="register()" class="w-full max-w-md rounded bg-white px-6 py-6 shadow-md sm:px-8">
     <div class="flex justify-center self-center mb-4">
-      <img src="./assets/photo.jpg" alt="photo" class="w-auto rounded-full" />
+      <img src="/assets/photo.jpg" alt="Profile illustration" class="h-20 w-20 rounded-full object-cover" />
     </div>
     <div class="mb-4">
       <label for="firstName" class="block text-sm font-bold mb-2">First Name:</label>

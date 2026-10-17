@@ -1,12 +1,12 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@config "./tailwind.config.js";
 
 /* You can add global styles to this file, and also import other style files */
 html,
 body {
   height: 100%;
 }
+
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
@@ -21,15 +21,15 @@ button {
   cursor: pointer;
   font-size: 1em;
   transition: background-color 0.3s ease;
+}
 
-  &:hover {
-    background-color: #0056b3;
-  }
+button:hover {
+  background-color: #0056b3;
+}
 
-  &:disabled {
-    background-color: #cccccc;
-    cursor: not-allowed;
-  }
+button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
 }
 
 input,
@@ -42,22 +42,11 @@ select {
   font-size: 1em;
   margin-top: 8px;
   margin-bottom: 16px;
-
-  &:focus {
-    border-color: #007bff;
-    outline: none;
-  }
 }
 
-.h-screen {
-  height: 94.2vh;
+input:focus,
+select:focus {
+  border-color: #007bff;
+  outline: none;
 }
 
-html,
-body {
-  height: 100%;
-}
-body {
-  margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
-}
