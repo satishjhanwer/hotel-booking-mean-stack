@@ -2757,7 +2757,7 @@ __metadata:
     cors: "npm:^2.8.6"
     dotenv: "npm:^18.0.8"
     express: "npm:^5.3.0"
-    joi: "npm:^18.3.0"
+    joi: "npm:^18.3.1"
     jsonwebtoken: "npm:^9.0.3"
     mongoose: "npm:^9.11.2"
     rate-limiter-flexible: "npm:^11.2.3"
@@ -4352,9 +4352,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"joi@npm:^18.3.0":
-  version: 18.3.0
-  resolution: "joi@npm:18.3.0"
+"joi@npm:^18.3.1":
+  version: 18.3.1
+  resolution: "joi@npm:18.3.1"
   dependencies:
     "@hapi/address": "npm:^5.1.1"
     "@hapi/formula": "npm:^3.0.2"
@@ -4363,7 +4363,7 @@ __metadata:
     "@hapi/tlds": "npm:^1.1.1"
     "@hapi/topo": "npm:^6.0.2"
     "@standard-schema/spec": "npm:^1.1.0"
-  checksum: 10c0/13b4ab345a79562fa57e483208c1fcb71fbb56bd52ccd97c295db80a5d40e03ec130364080375afe2035f33b3b9f79a9b1b0bb508b90b8f2517eb3e52c9bb27b
+  checksum: 10c0/0a05264e9d9636e1b694ed68685a6e763e9c3dfc21f7b4e69ae157d28fa73c95e0a07e066f03e1ad1b028fb411dd21dab3ca3617ded0c479fd7a3e52b100f3ce
   languageName: node
   linkType: hard
 
